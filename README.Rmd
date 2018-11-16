@@ -1,0 +1,59 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+# whatarelief
+
+The goal of whatarelief is to build a set of raster tiles from a topography raster based on polygons. 
+
+BEWARE: this is purely a proof of concept, not functional yet. These functions will blithely download data and use your disk space in messy ways ...
+
+## Installation
+
+You can install the development version of whatarelief from [Github](https://github.com/mdsumner/whatarelief) with:
+
+``` r
+devtools::install_github("mdsumner/whatarelief")
+```
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+https://ropensci.org/blog/2018/11/13/antarctic/
+
+
+```{r example}
+library(blueant)
+src <-   sources("ETOPO2 bathymetry")
+
+library(whatarelief)
+result <- get_relief(src)
+
+topo <- raster::raster(find_relief())
+
+library(ozmaps)
+polys <- ozmaps::ozmap_data("states")
+
+library(sf)
+x <- relief_patcher(as(polys, "Spatial"), topo, pname = "first_successful_run")
+
+library(raster)
+purrr::walk(x, plot)
+
+```
+
+
+  Please note that the 'whatarelief' project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By contributing to this project, you agree to abide by its terms.
+  
+  
