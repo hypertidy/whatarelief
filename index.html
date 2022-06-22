@@ -207,6 +207,23 @@
 <p>Note that, we could use any raster data of any kind here as custom ’source’s … (we’re figuring out how to frame this package in general terms, that aren’t too “spatial”).</p>
 </div>
 <div class="section level2">
+<h2 id="experimental-features">Experimental features<a class="anchor" aria-label="anchor" href="#experimental-features"></a>
+</h2>
+<p>We are working out some ways of accessing data used by the raadtools project.</p>
+<p>Please don’t rely on them.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">whatarelief</span><span class="op">)</span>
+<span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/raad_source.html">raad_source</a></span><span class="op">(</span><span class="st">"nsidc_25km_seaice"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/terra/man/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">files</span><span class="op">)</span>
+<span class="co">#&gt; [1] "date"          "north_vrt_dsn" "south_vrt_dsn"</span>
+<span class="va">idx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html" class="external-link">which.max</a></span><span class="op">(</span><span class="va">files</span><span class="op">$</span><span class="va">date</span><span class="op">)</span>
+
+<span class="va">mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/elevation.html">elevation</a></span><span class="op">(</span>source <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">files</span><span class="op">[</span><span class="va">idx</span>, <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"north_vrt_dsn"</span>, <span class="st">"south_vrt_dsn"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
+<span class="va">brks</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">mat</span><span class="op">[</span><span class="va">mat</span> <span class="op">&lt;=</span> <span class="fl">250</span> <span class="op">&amp;</span> <span class="va">mat</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, length.out <span class="op">=</span> <span class="fl">16</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/terra/man/image.html" class="external-link">image</a></span><span class="op">(</span><span class="va">mat</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/gray.colors.html" class="external-link">grey.colors</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/dimensions.html" class="external-link">length</a></span><span class="op">(</span><span class="va">brks</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="va">brks</span>, main <span class="op">=</span> <span class="va">files</span><span class="op">$</span><span class="va">date</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span><span class="op">)</span></code></pre></div>
+<p><img src="reference/figures/README-nsidc-1.png" width="100%"></p>
+</div>
+<div class="section level2">
 <h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
 </h2>
 <p>Please note that the whatarelief project is released with a <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html" class="external-link">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
