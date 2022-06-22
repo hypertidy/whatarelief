@@ -50,13 +50,14 @@ https://doi.org/10.5067/MEaSUREs/NASADEM/NASADEM_HGT.001.
 }
 \examples{
 
-image(elevation())
-image(elevation(c(100, 150, -60, -20)))
+image(elevation(), useRaster = TRUE)
+image(elevation(c(100, 150, -60, -20)), useRaster = TRUE)
 elevation(terra::rast())
 elevation(raster::raster())
 
 elevation(raster::raster(raster::extent(80, 120, -60, -40), res = 0.25, crs = "OGC:CRS84"))
-
+\donttest{
 elevation(raster::raster(raster::extent(c(-1, 1, -1, 1) * 15e3), nrows = 1024, ncols = 1024,
    crs = "+proj=laea +lat_0=44.6371 +lon_0=-63.5923"))
+}
 }

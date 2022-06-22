@@ -44,7 +44,7 @@ format_out <- function(x) {
   if (inherits(x, "numeric")) {
 
     if (is.null(projection)) projection <- "OGC:CRS84"
-    if (is.null(dimension)) dimension <- as.integer(512 * sort(c(1, diff(x[1:2])/diff(x[3:4])), decreasing = TRUE) )
+    if (is.null(dimension)) dimension <- as.integer(256 * sort(c(1, diff(x[1:2])/diff(x[3:4])), decreasing = TRUE) )
     lonlat <- grepl("lonlat", projection) || grepl("4326", projection) || grepl("4269", projection) || grepl("OGC:CRS84", projection)
     x <- list(extent = x, dimension = dimension, projection = projection, lonlat = lonlat, type = "matrix")
   }
@@ -80,15 +80,16 @@ format_out <- function(x) {
 #'
 #' @examples
 #'
-#' image(elevation())
-#' image(elevation(c(100, 150, -60, -20)))
+#' image(elevation(), useRaster = TRUE)
+#' image(elevation(c(100, 150, -60, -20)), useRaster = TRUE)
 #' elevation(terra::rast())
 #' elevation(raster::raster())
 #'
 #' elevation(raster::raster(raster::extent(80, 120, -60, -40), res = 0.25, crs = "OGC:CRS84"))
-#'
+#' \donttest{
 #' elevation(raster::raster(raster::extent(c(-1, 1, -1, 1) * 15e3), nrows = 1024, ncols = 1024,
 #'    crs = "+proj=laea +lat_0=44.6371 +lon_0=-63.5923"))
+#' }
 elevation <- function(extent = c(-180, 180, -90, 90), ..., dimension = NULL, projection = NULL, resample = "bilinear", source = NULL, threshold = 0.5) {
 
   xraster <- extent ## in the case of terra or raster

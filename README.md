@@ -171,9 +171,9 @@ image(elevation(extent = c(-1, 1, -1, 1) * 1e7, projection = "+proj=laea +lat_0=
 
 <img src="man/figures/README-aws-global-2.png" width="100%" />
 
-But, we always fall back to our GEBCO 2019 source to fill the gap even
-with a custom source (note we can provide any number of sources, in any
-mix of extents and projections and resolutions).
+But, we can fall back to our GEBCO 2019 source to fill the gap even with
+a custom source (note we can provide any number of sources, in any mix
+of extents and projections and resolutions).
 
 ``` r
 gebco <- "/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2019_GEOTIFF/GEBCO_2019.tif"
