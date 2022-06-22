@@ -200,6 +200,27 @@ Note that, we could use any raster data of any kind here as custom
 ’source’s … (we’re figuring out how to frame this package in general
 terms, that aren’t too “spatial”).
 
+## Experimental features
+
+We are working out some ways of accessing data used by the raadtools
+project.
+
+Please don’t rely on them.
+
+``` r
+library(whatarelief)
+files <- raad_source("nsidc_25km_seaice")
+names(files)
+#> [1] "date"          "north_vrt_dsn" "south_vrt_dsn"
+idx <- which.max(files$date)
+
+mat <- elevation(source = unlist(files[idx, c("north_vrt_dsn", "south_vrt_dsn")]))
+brks <- quantile(mat[mat <= 250 & mat > 0], seq(0, 1, length.out = 16))
+image(mat, col = grey.colors(length(brks) - 1), breaks = brks, main = files$date[idx])
+```
+
+<img src="man/figures/README-nsidc-1.png" width="100%" />
+
 ## Code of Conduct
 
 Please note that the whatarelief project is released with a [Contributor
