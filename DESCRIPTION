@@ -1,18 +1,23 @@
 Package: whatarelief
-Title: Get topography and organize it by polygon
-Version: 0.0.0.9000
+Title: Get topography elevation data
+Version: 0.0.1
 Authors@R: person("Michael D.","Sumner", role = c("aut", "cre"), email = "mdsumner@gmail.com")
-Description: What the package does (one paragraph).
+Description: Obtain elevation data, topography relief for any region on the Earth. Topography and
+ bathymetry data is supported by default. Sensible defaults exist for usage, with a matrix of entire planet
+ topography(and bathymetry) returned. The geographic extent can be modified (from whole-planet) to a simple
+ region in longitude/latitude by 'xmin,xmax,ymin,ymax' range, or by specifying a grid exactly with extent,
+ dimension, projection in generic or spatial formats ('terra' or 'raster'). Online sources for data are used, 
+ 'GEBCO 2019' as a background (to ~500m resolution) and 'SRTM/NASADEM' for higher resolution (to ~30m resolution).
+ Custom source/s of topography may be input to override defaults, links to file/s or URLs as required. 
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.2.0
 Imports: 
-    raster,
-    rappdirs,
-    bowerbird
+    vapour
 Suggests: 
-    sf,
-    blueant,
-    ozmaps
-Remotes: AustralianAntarcticDivision/blueant, mdsumner/ozmaps, ropensci/bowerbird
+    terra,
+    raster,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

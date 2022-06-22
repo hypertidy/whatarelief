@@ -1,5 +1,7 @@
 ---
 output: github_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -12,48 +14,130 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 ```
+
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/mdsumner/whatarelief/workflows/R-CMD-check/badge.svg)](https://github.com/mdsumner/whatarelief/actions)
+<!-- badges: end -->
+
 # whatarelief
 
-The goal of whatarelief is to build a set of raster tiles from a topography raster based on polygons. 
-
-BEWARE: this is purely a proof of concept, not functional yet. These functions will blithely download data and use your disk space in messy ways ...
+The goal of whatarelief is to obtain elevation data. 
 
 ## Installation
 
 You can install the development version of whatarelief from [Github](https://github.com/mdsumner/whatarelief) with:
 
 ``` r
-devtools::install_github("mdsumner/whatarelief")
+remotes::install_github("mdsumner/whatarelief")
 ```
 
-## Example
+## Get elevation data
 
-This is a basic example which shows you how to solve a common problem:
+Whole planet by default, specify and extent to hone this, use 'dimension' and 'projection' for more custom options. 
 
-https://ropensci.org/blog/2018/11/13/antarctic/
-
-
-```{r example}
-library(blueant)
-src <-   sources("ETOPO2 bathymetry")
-
+```{r elevation}
 library(whatarelief)
-result <- get_relief(src)
+image(elevation())
+image(x0 <- elevation(extent = c(120, 160, 30, 50)), col = hcl.colors(24))
+contour(x0, add = TRUE, levels = 10)
 
-topo <- raster::raster(find_relief())
 
-library(ozmaps)
-polys <- ozmaps::ozmap_data("states")
+image(elevation(extent = c(120, 160, 30, 50), dimension = dev.size("px")))
 
-library(sf)
-x <- relief_patcher(as(polys, "Spatial"), topo, pname = "first_successful_run")
+image(elevation(extent = c(120, 160, -50, -20), dimension = c(60, 85)), resample = "near")
 
-library(raster)
-purrr::walk(x, plot)
 
+image(elevation(extent = c(-1, 1, -1, 1) * 5e6, projection = "+proj=lcc +lon_0=-85 +lat_0=-42 +lat_1=0 +lat_2=-30"))
+```
+
+Can use a raster object. 
+
+```{r rast}
+elevation(terra::rast())
+
+template <- terra::rast(terra::ext(c(-1, 1, -1, 1) * 5e6), crs = "+proj=lcc +lon_0=-85 +lat_0=-42 +lat_1=0 +lat_2=-30", ncols = 1024, nrows = 1024)
+r <- elevation(template)
+r
+
+terra::plot(r)
 ```
 
 
-  Please note that the 'whatarelief' project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By contributing to this project, you agree to abide by its terms.
+Works down to quite high resolution. 
+
+```{r resolution}
+pt <- c(151.2093, -33.8688)
+ex <- c(-1, 1, -1, 1) * 0.01 + rep(pt, each = 2L)
+elev <- elevation(extent = ex)
+image(elev, zlim = c(0, max(elev)))
+
+```
+
+Similar example, but a bit more context so we can easily see that it's "correct", by respatializing! 
+
+```{r correct}
+ex <- c(-1, 1, -1, 1) * 0.1 + rep(pt, each = 2L)
+elev <- elevation(extent = ex)
+image(elev, zlim = c(0, max(elev)))
+contour(elev, levels = 5, add = TRUE)
+```
+
+We can easily "re-spatialize", but in this package we simply keep things as simple as possible.  
+
+```{r spatial}
+library(terra)
+template <- terra::rast(terra::ext(ex), ncols = dim(elev)[1L], nrows = dim(elev)[2L], crs = "OGC:CRS84")
+plot(setValues(template, elev[, ncol(elev):1]))
+plot(sf::st_cast(ozmaps::abs_ced, "MULTILINESTRING"), add = TRUE, col = "black")
+```
   
+Note that all the information we need is present, we provide the extent, and the result has a dimension. (Longitude/latitude is assumed if sensible, else there's a warning - but the code will run what you ask of it). Provide all the information extent, dimension, projection to get a controlled result, or use a raster or terra object to store these. 
+
+
+
+## Custom sources
+
+We can provide our own sources of elevation. 
+
+Use the 'source' argument to `elevation()`, you can input multiple sources so that a higher resolution one has
+a fallback to a lower resolution one, note that by default we have "GEBCO 2019", then "NASADEM" in the sources. It doesn't matter what projection or extent these have, but usually a higher resolution one should be listed after lower. 
+
+For example, this string provides the Amazon compute S3 elevation tiles, an 'XYZ' image server that has geotiff elements but is not a georeferenced online service (hence this small bit of XML to wrap it up). 
+
+```{r aws-custom}
+aws <- "<GDAL_WMS><Service name=\"TMS\"><ServerUrl>https://s3.amazonaws.com/elevation-tiles-prod/geotiff/${z}/${x}/${y}.tif</ServerUrl></Service><DataWindow><UpperLeftX>-20037508.34</UpperLeftX><UpperLeftY>20037508.34</UpperLeftY><LowerRightX>20037508.34</LowerRightX><LowerRightY>-20037508.34</LowerRightY><TileLevel>14</TileLevel><TileCountX>1</TileCountX><TileCountY>1</TileCountY><YOrigin>top</YOrigin></DataWindow><Projection>EPSG:3857</Projection><BlockSizeX>512</BlockSizeX><BlockSizeY>512</BlockSizeY><BandsCount>1</BandsCount><DataType>Int16</DataType><ZeroBlockHttpCodes>403,404</ZeroBlockHttpCodes><DataValues><NoData>-32768</NoData></DataValues><Cache/></GDAL_WMS>"
+
+```
+
+Using this, we can obtain a global summary of the available data. Sadly, these data are not quite global. 
+
+```{r aws-global}
+m <- elevation(source = aws)
+image(seq(-180, 180, length.out = nrow(m)), seq(-90, 90, length.out = ncol(m)), m, asp = 1)
+maps::map(add = TRUE)
+abline(h = c(-90, 90), lwd = 2)
+
+image(elevation(extent = c(-1, 1, -1, 1) * 1e7, projection = "+proj=laea +lat_0=-90", source = aws))
+```
+
+But, we always fall back to our GEBCO 2019 source to fill the gap even with a custom source (note we can provide any number of sources, in any mix of extents and projections and resolutions). 
+
+
+```{r fallback}
+gebco <- "/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2019_GEOTIFF/GEBCO_2019.tif"
+m <- elevation(source = c(gebco, aws))
+image(seq(-180, 180, length.out = nrow(m)), seq(-90, 90, length.out = ncol(m)), m, asp = 1)
+maps::map(add = TRUE)
+abline(h = c(-90, 90), lwd = 2)
+
+image(elevation(extent = c(-1, 1, -1, 1) * 1e7, projection = "+proj=laea +lat_0=-90", source = c(gebco, aws)))
+
+```
+## Properties of the sources in use
+
+See vignette
+
+## Code of Conduct
   
+Please note that the whatarelief project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
+

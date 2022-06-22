@@ -2,3 +2,4 @@
 ^README\.Rmd$
 ^whatarelief\.Rproj$
 ^\.Rproj\.user$
+^\.github$

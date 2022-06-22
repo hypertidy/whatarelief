@@ -1,0 +1,154 @@
+---
+title: "elevation-sources"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{elevation-sources}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+whatarelief provides two sources of topography, the first is a global topography and bathymetry dataset for the entire world in longitude/latitude (at roughly 500m resolution). 
+
+
+To use these with GDAL we prepend '/vsicurl/' which nominates the virtual handler to treat a url as a data source. 
+
+```R
+gebco <- "/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2019_GEOTIFF/GEBCO_2019.tif"
+nasadem <- "/vsicurl/https://opentopography.s3.sdsc.edu/raster/NASADEM/NASADEM_be.vrt"
+
+writeLines(vapour:::gdalinfo_internal(gebco, json = FALSE))
+
+Driver: GTiff/GeoTIFF
+Files: /vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2019_GEOTIFF/GEBCO_2019.tif
+Size is 86400, 43200
+Coordinate System is:
+GEOGCRS["WGS 84",
+    DATUM["World Geodetic System 1984",
+        ELLIPSOID["WGS 84",6378137,298.257223563,
+            LENGTHUNIT["metre",1]]],
+    PRIMEM["Greenwich",0,
+        ANGLEUNIT["degree",0.0174532925199433]],
+    CS[ellipsoidal,2],
+        AXIS["geodetic latitude (Lat)",north,
+            ORDER[1],
+            ANGLEUNIT["degree",0.0174532925199433]],
+        AXIS["geodetic longitude (Lon)",east,
+            ORDER[2],
+            ANGLEUNIT["degree",0.0174532925199433]],
+    ID["EPSG",4326]]
+Data axis to CRS axis mapping: 2,1
+PROJ.4 string is:
+'+proj=longlat +datum=WGS84 +no_defs'
+Origin = (-180.000000000000000,90.000000000000000)
+Pixel Size = (0.004166666666667,-0.004166666666667)
+Metadata domains:
+  IMAGE_STRUCTURE
+  (default)
+  DERIVED_SUBDATASETS
+Metadata:
+  AREA_OR_POINT=Area
+  elevation#long_name=Elevation relative to sea level
+  elevation#sdn_parameter_name=Sea floor height (above mean sea level) {bathymetric height}
+  elevation#sdn_parameter_urn=SDN:P01::ALATZZ01
+  elevation#sdn_uom_name=Metres
+  elevation#sdn_uom_urn=SDN:P06::ULAA
+  elevation#standard_name=height_above_reference_ellipsoid
+  elevation#units=m
+  lat#axis=Y
+  lat#long_name=latitude
+  lat#sdn_parameter_name=Latitude north
+  lat#sdn_parameter_urn=SDN:P01::ALATZZ01
+  lat#sdn_uom_name=Degrees north
+  lat#sdn_uom_urn=SDN:P06::DEGN
+  lat#standard_name=latitude
+  lat#units=degrees_north
+  lon#axis=X
+  lon#long_name=longitude
+  lon#sdn_parameter_name=Longitude east
+  lon#sdn_parameter_urn=SDN:P01::ALONZZ01
+  lon#sdn_uom_name=Degrees east
+  lon#sdn_uom_urn=SDN:P06::DEGE
+  lon#standard_name=longitude
+  lon#units=degrees_east
+  NC_GLOBAL#comment=The data in the GEBCO_2019 Grid should not be used for navigation or any purpose relating to safety at sea.
+  NC_GLOBAL#Conventions=CF-1.6
+  NC_GLOBAL#history=Information on the development of the data set and the source data sets included in the grid can be found in the data set documentation available from https://www.gebco.net
+  NC_GLOBAL#institution=On behalf of the General Bathymetric Chart of the Oceans (GEBCO), the data are held at the British Oceanographic Data Centre (BODC).
+  NC_GLOBAL#node_offset=1
+  NC_GLOBAL#references=DOI: 10.5285/836f016a-33be-6ddc-e053-6c86abc0788e
+  NC_GLOBAL#source=The GEBCO_2019 Grid is the latest global bathymetric product released by the General Bathymetric Chart of the Oceans (GEBCO) and has been developed through the Nippon Foundation-GEBCO Seabed 2030 Project. This is a collaborative project between the Nippon Foundation of Japan and GEBCO. The Seabed 2030 Project aims to bring together all available bathymetric data to produce the definitive map of the world ocean floor and make it available to all.
+  NC_GLOBAL#title=The GEBCO_2019 Grid - a continuous terrain model for oceans and land at 15 arc-second intervals
+Image Structure Metadata:
+  COMPRESSION=DEFLATE
+  INTERLEAVE=BAND
+  LAYOUT=COG
+Corner Coordinates:
+Upper Left  (-180.0000000,  90.0000000) (180d 0' 0.00"W, 90d 0' 0.00"N)
+Lower Left  (-180.0000000, -90.0000000) (180d 0' 0.00"W, 90d 0' 0.00"S)
+Upper Right ( 180.0000000,  90.0000000) (180d 0' 0.00"E, 90d 0' 0.00"N)
+Lower Right ( 180.0000000, -90.0000000) (180d 0' 0.00"E, 90d 0' 0.00"S)
+Center      (   0.0000000,   0.0000000) (  0d 0' 0.01"E,  0d 0' 0.01"N)
+Band 1 Block=512x512 Type=Float32, ColorInterp=Gray
+  NoData Value=9.96920996838686905e+36
+  Overviews: 43200x21600, 21600x10800, 10800x5400, 5400x2700, 2700x1350, 1350x675, 675x337, 337x168
+  Unit Type: m
+  Metadata domains:
+    (default)
+  Metadata:
+    long_name=Elevation relative to sea level
+    NETCDF_VARNAME=elevation
+    sdn_parameter_name=Sea floor height (above mean sea level) {bathymetric height}
+    sdn_parameter_urn=SDN:P01::ALATZZ01
+    sdn_uom_name=Metres
+    sdn_uom_urn=SDN:P06::ULAA
+    standard_name=height_above_reference_ellipsoid
+    units=m
+
+writeLines(vapour:::gdalinfo_internal(nasadem, json = FALSE))
+
+Size is 1288801, 421201
+Coordinate System is:
+GEOGCRS["WGS 84",
+    DATUM["World Geodetic System 1984",
+        ELLIPSOID["WGS 84",6378137,298.257223563,
+            LENGTHUNIT["metre",1]]],
+    PRIMEM["Greenwich",0,
+        ANGLEUNIT["degree",0.0174532925199433]],
+    CS[ellipsoidal,2],
+        AXIS["geodetic latitude (Lat)",north,
+            ORDER[1],
+            ANGLEUNIT["degree",0.0174532925199433]],
+        AXIS["geodetic longitude (Lon)",east,
+            ORDER[2],
+            ANGLEUNIT["degree",0.0174532925199433]],
+    ID["EPSG",4326]]
+Data axis to CRS axis mapping: 2,1
+PROJ.4 string is:
+'+proj=longlat +datum=WGS84 +no_defs'
+Origin = (-179.000138888888898,61.000138888888891)
+Pixel Size = (0.000277777777778,-0.000277777777778)
+Metadata domains:
+  DERIVED_SUBDATASETS
+Corner Coordinates:
+Upper Left  (-179.0001389,  61.0001389) (179d 0' 0.50"W, 61d 0' 0.50"N)
+Lower Left  (-179.0001389, -56.0001389) (179d 0' 0.50"W, 56d 0' 0.50"S)
+Upper Right ( 179.0001389,  61.0001389) (179d 0' 0.50"E, 61d 0' 0.50"N)
+Lower Right ( 179.0001389, -56.0001389) (179d 0' 0.50"E, 56d 0' 0.50"S)
+Center      (   0.0000000,   2.5000000) (  0d 0' 0.00"E,  2d30' 0.00"N)
+Band 1 Block=128x128 Type=Int16, ColorInterp=Gray
+  NoData Value=-32768
+  Metadata domains:
+    LocationInfo
+```
+
+Show spatial coverage of NASADEM tiles ... TBD
+
+
+
