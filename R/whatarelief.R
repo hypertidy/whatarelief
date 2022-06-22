@@ -60,6 +60,13 @@ format_out <- function(x) {
 #'
 #' Note that data is streamed into memory, so don't make the dimensions of the 'x' target raster too big.
 #'
+#' To use these data, please attribute the use of GEBCO to the  GEBCO
+#' Compilation Group (2019) GEBCO 2019 Grid
+#' (doi:10.5285/836f016a-33be-6ddc-e053-6c86abc0788e), and the use of NASADEM to
+#' NASA JPL. NASADEM Merged DEM Global 1 arc second V001. 2020, distributed by
+#' NASA EOSDIS Land Processes DAAC,
+#' https://doi.org/10.5067/MEaSUREs/NASADEM/NASADEM_HGT.001.
+#'
 #' @param extent a numeric vector of xmin,xmax,ymin,ymax or a terra or raster rast object
 #' @param ... arguments passed to 'vapour::vapour_warp_raster'
 #' @param source a GDAL raster source, to override the inbuild GEBCO + SRTM (in future we might patch in local source)
@@ -80,7 +87,7 @@ format_out <- function(x) {
 #'
 #' elevation(raster::raster(raster::extent(80, 120, -60, -40), res = 0.25, crs = "OGC:CRS84"))
 #'
-#' elevation(raster::raster(raster::extent(c(-1, 1, -1, 1) * 25e3), nrows = 1024, ncols = 1024,
+#' elevation(raster::raster(raster::extent(c(-1, 1, -1, 1) * 15e3), nrows = 1024, ncols = 1024,
 #'    crs = "+proj=laea +lat_0=44.6371 +lon_0=-63.5923"))
 elevation <- function(extent = c(-180, 180, -90, 90), ..., dimension = NULL, projection = NULL, resample = "bilinear", source = NULL, threshold = 0.5) {
 

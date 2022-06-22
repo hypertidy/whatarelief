@@ -2,13 +2,17 @@ Package: whatarelief
 Title: Get topography elevation data
 Version: 0.0.1
 Authors@R: person("Michael D.","Sumner", role = c("aut", "cre"), email = "mdsumner@gmail.com")
-Description: Obtain elevation data, topography relief for any region on the Earth. Topography and
- bathymetry data is supported by default. Sensible defaults exist for usage, with a matrix of entire planet
- topography(and bathymetry) returned. The geographic extent can be modified (from whole-planet) to a simple
- region in longitude/latitude by 'xmin,xmax,ymin,ymax' range, or by specifying a grid exactly with extent,
- dimension, projection in generic or spatial formats ('terra' or 'raster'). Online sources for data are used, 
- 'GEBCO 2019' as a background (to ~500m resolution) and 'SRTM/NASADEM' for higher resolution (to ~30m resolution).
- Custom source/s of topography may be input to override defaults, links to file/s or URLs as required. 
+Description: Obtain elevation data, topography relief for any region on the Earth. 
+ Topography and bathymetry data is supported by default. Sensible defaults exist 
+ for usage, with a matrix of entire planet topography(and bathymetry) returned. 
+ The geographic extent can be modified (from whole-planet) to a simple region in 
+ longitude/latitude by 'xmin,xmax,ymin,ymax' range, or by specifying a grid 
+ exactly with extent, dimension, projection in generic or spatial formats 
+ ('terra' or 'raster'). Online sources for data are used, 'GEBCO_2019' General 
+ Bathymetric Chart of the Oceans (GEBCO) as a background (to ~500m resolution), 
+ and NASA JPL. NASADEM Merged DEM Global 1 arc second V001for higher resolution 
+ (to ~30m resolution). Custom source/s of topography may be input to override defaults, 
+ links to file/s or URLs as required. 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

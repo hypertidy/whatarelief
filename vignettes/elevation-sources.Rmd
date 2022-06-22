@@ -23,6 +23,13 @@ To use these with GDAL we prepend '/vsicurl/' which nominates the virtual handle
 gebco <- "/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2019_GEOTIFF/GEBCO_2019.tif"
 nasadem <- "/vsicurl/https://opentopography.s3.sdsc.edu/raster/NASADEM/NASADEM_be.vrt"
 
+```
+
+GEBCO 2019 is a global bathymetric product released by the [General Bathymetric Chart of the Oceans (GEBCO)](https://www.gebco.net/data_and_products/gridded_bathymetry_data/gebco_2019/gebco_2019_info.html) (GEBCO Compilation Group, 2019). The data was downloaded in its original NetCDF form and converted to tiled GeoTIFF with overviews (Cloud-optimized COG profile), and is provided by the Australian Antarctic Data Centre in COG form](https://data.aad.gov.au/metadata/GEBCO_2019_GEOTIFF). 
+
+
+
+```R
 writeLines(vapour:::gdalinfo_internal(gebco, json = FALSE))
 
 Driver: GTiff/GeoTIFF
@@ -110,7 +117,12 @@ Band 1 Block=512x512 Type=Float32, ColorInterp=Gray
     sdn_uom_urn=SDN:P06::ULAA
     standard_name=height_above_reference_ellipsoid
     units=m
+```
 
+NASADEM is a modernization of the Digital Elevation Model (DEM) and associated products generated from the Shuttle Radar Topography Mission (SRTM) data (NASA JPL, 2021). It is provided via a [OpenTopography data source](https://portal.opentopography.org/datasetMetadata?otCollectionID=OT.032021.4326.2) URIs of GeoTIFF files that are
+all included in one VRT (GDAL virtual format) file. 
+
+```R
 writeLines(vapour:::gdalinfo_internal(nasadem, json = FALSE))
 
 Size is 1288801, 421201
@@ -149,6 +161,14 @@ Band 1 Block=128x128 Type=Int16, ColorInterp=Gray
 ```
 
 Show spatial coverage of NASADEM tiles ... TBD
+
+
+
+## References
+
+GEBCO Compilation Group (2019) GEBCO 2019 Grid (doi:10.5285/836f016a-33be-6ddc-e053-6c86abc0788e)
+
+NASA JPL (2021). NASADEM Merged DEM Global 1 arc second V001. Distributed by OpenTopography. https://doi.org/10.5069/G93T9FD9. Accessed: 2022-06-22
 
 
 

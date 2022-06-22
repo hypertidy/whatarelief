@@ -40,6 +40,13 @@ Originally using GEBCO 2019 as a background, and SRTM 30m resolution for
 regions that fit approximately within the size of an SRTM tile (these are 1 degree wide).
 
 Note that data is streamed into memory, so don't make the dimensions of the 'x' target raster too big.
+
+To use these data, please attribute the use of GEBCO to the  GEBCO
+Compilation Group (2019) GEBCO 2019 Grid
+(doi:10.5285/836f016a-33be-6ddc-e053-6c86abc0788e), and the use of NASADEM to
+NASA JPL. NASADEM Merged DEM Global 1 arc second V001. 2020, distributed by
+NASA EOSDIS Land Processes DAAC,
+https://doi.org/10.5067/MEaSUREs/NASADEM/NASADEM_HGT.001.
 }
 \examples{
 
@@ -50,6 +57,6 @@ elevation(raster::raster())
 
 elevation(raster::raster(raster::extent(80, 120, -60, -40), res = 0.25, crs = "OGC:CRS84"))
 
-elevation(raster::raster(raster::extent(c(-1, 1, -1, 1) * 25e3), nrows = 1024, ncols = 1024,
+elevation(raster::raster(raster::extent(c(-1, 1, -1, 1) * 15e3), nrows = 1024, ncols = 1024,
    crs = "+proj=laea +lat_0=44.6371 +lon_0=-63.5923"))
 }
