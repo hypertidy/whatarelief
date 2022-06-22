@@ -106,16 +106,7 @@
 <span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="fu"><a href="reference/elevation.html">elevation</a></span><span class="op">(</span>extent <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">120</span>, <span class="fl">160</span>, <span class="fl">30</span>, <span class="fl">50</span><span class="op">)</span>, dimension <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/dev.size.html" class="external-link">dev.size</a></span><span class="op">(</span><span class="st">"px"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-elevation-3.png" width="100%"></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="fu"><a href="reference/elevation.html">elevation</a></span><span class="op">(</span>extent <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">120</span>, <span class="fl">160</span>, <span class="op">-</span><span class="fl">50</span>, <span class="op">-</span><span class="fl">20</span><span class="op">)</span>, dimension <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">60</span>, <span class="fl">85</span><span class="op">)</span><span class="op">)</span>, resample <span class="op">=</span> <span class="st">"near"</span><span class="op">)</span>
-<span class="co">#&gt; Warning in plot.window(...): "resample" is not a graphical parameter</span>
-<span class="co">#&gt; Warning in plot.xy(xy, type, ...): "resample" is not a graphical parameter</span>
-<span class="co">#&gt; Warning in axis(side = side, at = at, labels = labels, ...): "resample" is not a</span>
-<span class="co">#&gt; graphical parameter</span>
-
-<span class="co">#&gt; Warning in axis(side = side, at = at, labels = labels, ...): "resample" is not a</span>
-<span class="co">#&gt; graphical parameter</span>
-<span class="co">#&gt; Warning in box(...): "resample" is not a graphical parameter</span>
-<span class="co">#&gt; Warning in title(...): "resample" is not a graphical parameter</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="fu"><a href="reference/elevation.html">elevation</a></span><span class="op">(</span>extent <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">120</span>, <span class="fl">160</span>, <span class="op">-</span><span class="fl">50</span>, <span class="op">-</span><span class="fl">20</span><span class="op">)</span>, dimension <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">60</span>, <span class="fl">85</span><span class="op">)</span>, resample <span class="op">=</span> <span class="st">"near"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-elevation-4.png" width="100%"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
@@ -203,8 +194,13 @@
 <p><img src="reference/figures/README-fallback-1.png" width="100%"></p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/terra/man/image.html" class="external-link">image</a></span><span class="op">(</span><span class="fu"><a href="reference/elevation.html">elevation</a></span><span class="op">(</span>extent <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">*</span> <span class="fl">1e7</span>, projection <span class="op">=</span> <span class="st">"+proj=laea +lat_0=-90"</span>, source <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">gebco</span>, <span class="va">aws</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README-fallback-2.png" width="100%"> ## Properties of the sources in use</p>
-<p>See vignette</p>
+<p><img src="reference/figures/README-fallback-2.png" width="100%"></p>
+</div>
+<div class="section level2">
+<h2 id="properties-of-the-sources-in-use">Properties of the sources in use<a class="anchor" aria-label="anchor" href="#properties-of-the-sources-in-use"></a>
+</h2>
+<p>See vignette <a href="https://mdsumner.github.io/whatarelief/articles/elevation-sources.html" class="external-link">elevation-sources</a>.</p>
+<p>Note that, we could use any raster data of any kind here as custom ’source’s … (we’re figuring out how to frame this package in general terms, that aren’t too “spatial”).</p>
 </div>
 <div class="section level2">
 <h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
@@ -219,7 +215,8 @@
     <div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a></li>
+<li><a href="LICENSE.html">Full license</a></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
 
