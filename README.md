@@ -45,16 +45,7 @@ image(elevation(extent = c(120, 160, 30, 50), dimension = dev.size("px")))
 <img src="man/figures/README-elevation-3.png" width="100%" />
 
 ``` r
-image(elevation(extent = c(120, 160, -50, -20), dimension = c(60, 85)), resample = "near")
-#> Warning in plot.window(...): "resample" is not a graphical parameter
-#> Warning in plot.xy(xy, type, ...): "resample" is not a graphical parameter
-#> Warning in axis(side = side, at = at, labels = labels, ...): "resample" is not a
-#> graphical parameter
-
-#> Warning in axis(side = side, at = at, labels = labels, ...): "resample" is not a
-#> graphical parameter
-#> Warning in box(...): "resample" is not a graphical parameter
-#> Warning in title(...): "resample" is not a graphical parameter
+image(elevation(extent = c(120, 160, -50, -20), dimension = c(60, 85), resample = "near"))
 ```
 
 <img src="man/figures/README-elevation-4.png" width="100%" />
@@ -198,10 +189,16 @@ abline(h = c(-90, 90), lwd = 2)
 image(elevation(extent = c(-1, 1, -1, 1) * 1e7, projection = "+proj=laea +lat_0=-90", source = c(gebco, aws)))
 ```
 
-<img src="man/figures/README-fallback-2.png" width="100%" /> \##
-Properties of the sources in use
+<img src="man/figures/README-fallback-2.png" width="100%" />
+
+## Properties of the sources in use
 
 See vignette
+[elevation-sources](https://mdsumner.github.io/whatarelief/articles/elevation-sources.html).
+
+Note that, we could use any raster data of any kind here as custom
+’source’s … (we’re figuring out how to frame this package in general
+terms, that aren’t too “spatial”).
 
 ## Code of Conduct
 
