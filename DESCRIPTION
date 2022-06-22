@@ -10,7 +10,7 @@ Description: Obtain elevation data, topography relief for any region on the Eart
  exactly with extent, dimension, projection in generic or spatial formats 
  ('terra' or 'raster'). Online sources for data are used, 'GEBCO_2019' General 
  Bathymetric Chart of the Oceans (GEBCO) as a background (to ~500m resolution), 
- and NASA JPL. NASADEM Merged DEM Global 1 arc second V001for higher resolution 
+ and NASA JPL. NASADEM Merged DEM Global 1 arc second V001 for higher resolution 
  (to ~30m resolution). Custom source/s of topography may be input to override defaults, 
  links to file/s or URLs as required. 
 License: MIT + file LICENSE
