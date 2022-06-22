@@ -109,14 +109,20 @@
     <p>Originally using GEBCO 2019 as a background, and SRTM 30m resolution for
 regions that fit approximately within the size of an SRTM tile (these are 1 degree wide).</p>
 <p>Note that data is streamed into memory, so don't make the dimensions of the 'x' target raster too big.</p>
+<p>To use these data, please attribute the use of GEBCO to the  GEBCO
+Compilation Group (2019) GEBCO 2019 Grid
+(doi:10.5285/836f016a-33be-6ddc-e053-6c86abc0788e), and the use of NASADEM to
+NASA JPL. NASADEM Merged DEM Global 1 arc second V001. 2020, distributed by
+NASA EOSDIS Land Processes DAAC,
+https://doi.org/10.5067/MEaSUREs/NASADEM/NASADEM_HGT.001.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/pkg/terra/man/image.html" class="external-link">image</a></span><span class="op">(</span><span class="fu">elevation</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/pkg/terra/man/image.html" class="external-link">image</a></span><span class="op">(</span><span class="fu">elevation</span><span class="op">(</span><span class="op">)</span>, useRaster <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="elevation-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/pkg/terra/man/image.html" class="external-link">image</a></span><span class="op">(</span><span class="fu">elevation</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">150</span>, <span class="op">-</span><span class="fl">60</span>, <span class="op">-</span><span class="fl">20</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/pkg/terra/man/image.html" class="external-link">image</a></span><span class="op">(</span><span class="fu">elevation</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">150</span>, <span class="op">-</span><span class="fl">60</span>, <span class="op">-</span><span class="fl">20</span><span class="op">)</span><span class="op">)</span>, useRaster <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">elevation</span><span class="op">(</span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> class       : SpatRaster </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dimensions  : 180, 360, 1  (nrow, ncol, nlyr)</span>
@@ -150,19 +156,20 @@ regions that fit approximately within the size of an SRTM tile (these are 1 degr
 <span class="r-out co"><span class="r-pr">#&gt;</span> names      : layer </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> values     : -5078.921, -1291.979  (min, max)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">elevation</span><span class="op">(</span><span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/raster.html" class="external-link">raster</a></span><span class="op">(</span><span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/extent.html" class="external-link">extent</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">*</span> <span class="fl">25e3</span><span class="op">)</span>, nrows <span class="op">=</span> <span class="fl">1024</span>, ncols <span class="op">=</span> <span class="fl">1024</span>,</span>
+<span class="r-in"><span class="co"># \donttest{</span></span>
+<span class="r-in"><span class="fu">elevation</span><span class="op">(</span><span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/raster.html" class="external-link">raster</a></span><span class="op">(</span><span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/extent.html" class="external-link">extent</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">*</span> <span class="fl">15e3</span><span class="op">)</span>, nrows <span class="op">=</span> <span class="fl">1024</span>, ncols <span class="op">=</span> <span class="fl">1024</span>,</span>
 <span class="r-in">   crs <span class="op">=</span> <span class="st">"+proj=laea +lat_0=44.6371 +lon_0=-63.5923"</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "SRTM in use, in addition to GEBCO"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> class      : RasterLayer </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dimensions : 1024, 1024, 1048576  (nrow, ncol, ncell)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> resolution : 48.82812, 48.82812  (x, y)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> extent     : -25000, 25000, -25000, 25000  (xmin, xmax, ymin, ymax)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> resolution : 29.29688, 29.29688  (x, y)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> extent     : -15000, 15000, -15000, 15000  (xmin, xmax, ymin, ymax)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> crs        : +proj=laea +lat_0=44.6371 +lon_0=-63.5923 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> source     : memory</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> names      : layer </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> values     : -3.343157, 231.3755  (min, max)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> values     : -7.134448, 156  (min, max)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span class="co"># }</span></span>
 </code></pre></div>
     </div>
   </div>
