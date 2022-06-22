@@ -20,7 +20,7 @@ remotes::install_github("mdsumner/whatarelief")
 
 ## Get elevation data
 
-Whole planet by default, specify and extent to hone this, use
+Whole planet by default, specify an extent to hone this, use
 ‘dimension’ and ‘projection’ for more custom options.
 
 ``` r
