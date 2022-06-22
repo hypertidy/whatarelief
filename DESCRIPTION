@@ -9,7 +9,7 @@ Description: Obtain elevation data, topography relief for any region on the Eart
  dimension, projection in generic or spatial formats ('terra' or 'raster'). Online sources for data are used, 
  'GEBCO 2019' as a background (to ~500m resolution) and 'SRTM/NASADEM' for higher resolution (to ~30m resolution).
  Custom source/s of topography may be input to override defaults, links to file/s or URLs as required. 
-License: GPL-3
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.0
