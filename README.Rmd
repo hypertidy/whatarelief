@@ -82,7 +82,7 @@ image(elev, zlim = c(0, max(elev)))
 contour(elev, levels = 5, add = TRUE)
 ```
 
-We can easily "re-spatialize", but in this package we simply keep things as simple as possible.  
+We can "re-spatialize", but no special functionality is added we just use the available tools.  
 
 ```{r spatial}
 library(terra)

@@ -20,8 +20,8 @@ remotes::install_github("mdsumner/whatarelief")
 
 ## Get elevation data
 
-Whole planet by default, specify an extent to hone this, use
-‘dimension’ and ‘projection’ for more custom options.
+Whole planet by default, specify an extent to hone this, use ‘dimension’
+and ‘projection’ for more custom options.
 
 ``` r
 library(whatarelief)
@@ -114,8 +114,8 @@ contour(elev, levels = 5, add = TRUE)
 
 <img src="man/figures/README-correct-1.png" width="100%" />
 
-We can easily “re-spatialize”, but in this package we simply keep things
-as simple as possible.
+We can “re-spatialize”, but no special functionality is added we just
+use the available tools.
 
 ``` r
 library(terra)
