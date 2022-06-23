@@ -125,6 +125,6 @@ elevation <- function(extent = c(-180, 180, -90, 90), ..., dimension = NULL, pro
   switch (x$type,
   terra =   terra::setValues(xraster, vals),
   raster =  raster::setValues(xraster, vals),
-  matrix = matrix(vals, x$dimension[1L])[,x$dimension[2L]:1])
+  matrix = matrix(vals, x$dimension[2L], byrow = TRUE))#[,x$dimension[2L]:1])
 
 }

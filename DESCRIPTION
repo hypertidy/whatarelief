@@ -1,6 +1,6 @@
 Package: whatarelief
 Title: Get topography elevation data
-Version: 0.0.1
+Version: 0.0.1.9001
 Authors@R: person("Michael D.","Sumner", role = c("aut", "cre"), email = "mdsumner@gmail.com")
 Description: Obtain elevation data, topography relief for any region on the Earth. 
  Topography and bathymetry data is supported by default. Sensible defaults exist 
