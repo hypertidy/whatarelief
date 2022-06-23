@@ -20,7 +20,7 @@
  exactly with extent, dimension, projection in generic or spatial formats 
  (terra or raster). Online sources for data are used, GEBCO_2019 General 
  Bathymetric Chart of the Oceans (GEBCO) as a background (to ~500m resolution), 
- and NASA JPL. NASADEM Merged DEM Global 1 arc second V001for higher resolution 
+ and NASA JPL. NASADEM Merged DEM Global 1 arc second V001 for higher resolution 
  (to ~30m resolution). Custom source/s of topography may be input to override defaults, 
  links to file/s or URLs as required. ">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -160,7 +160,7 @@
 <span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="va">elev</span>, zlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">elev</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/contour.html" class="external-link">contour</a></span><span class="op">(</span><span class="va">elev</span>, levels <span class="op">=</span> <span class="fl">5</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-correct-1.png" width="100%"></p>
-<p>We can easily “re-spatialize”, but in this package we simply keep things as simple as possible.</p>
+<p>We can “re-spatialize”, but no special functionality is added we just use the available tools.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/terra/" class="external-link">terra</a></span><span class="op">)</span>
 <span class="co">#&gt; terra 1.5.21</span>
