@@ -1,7 +1,10 @@
 # whatarelief dev
 
 
-* Add `imagery()`, currently getting Virtual Earth sat image, can't yet deal with raster/terra objects. Internal function '.imagery_sources()' has more options (goog, bluemarble, esri). 
+* Add `streetmap()` currently getting OSM image, same support as 'imagery()'.  Internal object `.streetmap_sources` has
+openstreetmap, google, virtual earth, esri. 
+
+* Add `imagery()`, currently getting Virtual Earth sat image, can't yet deal with raster/terra objects. Internal object '.imagery_sources' has more options (goog, bluemarble, esri, virtualearth, ESA_worldcover_2020). 
 
 * Potentially breaking change, to move to GDAL/raster topleft->right->down order for the data returned
 by 'elevation()'. This is WIP and may yet change again, hoping to have some visualization helpers better than

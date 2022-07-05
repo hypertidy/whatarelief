@@ -3,3 +3,4 @@
 export(elevation)
 export(imagery)
 export(raad_source)
+export(streetmap)

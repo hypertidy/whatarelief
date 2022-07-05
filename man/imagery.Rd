@@ -2,6 +2,7 @@
 % Please edit documentation in R/imagery.R
 \name{imagery}
 \alias{imagery}
+\alias{streetmap}
 \title{Get imagery data}
 \usage{
 imagery(
@@ -10,6 +11,15 @@ imagery(
   dimension = NULL,
   projection = "OGC:CRS84",
   resample = "bilinear",
+  source = NULL
+)
+
+streetmap(
+  extent = c(-180, 180, -90, 90),
+  ...,
+  dimension = NULL,
+  projection = "OGC:CRS84",
+  resample = "cubic",
   source = NULL
 )
 }
