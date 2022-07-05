@@ -97,6 +97,7 @@ elevation <- function(extent = c(-180, 180, -90, 90), ..., dimension = NULL, pro
 
   wh <- c(diff(x$extent[1:2]), diff(x$extent[3:4]))
   no_srtm <- FALSE
+  no_srtm30 <- FALSE
   if (x$lonlat) {
     if (max(wh) > threshold) {
       no_srtm <- TRUE
@@ -106,13 +107,21 @@ elevation <- function(extent = c(-180, 180, -90, 90), ..., dimension = NULL, pro
     if (max(wh) > (threshold * 111111.12)) {
       no_srtm <- TRUE
     }
+    if (max(wh) > (threshold/3 * 111111.12)) {
+      no_srtm30 <- TRUE
+    }
+
   }
 
   if (is.null(source)) {
     rso <- c("/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2019_GEOTIFF/GEBCO_2019.tif",
-             "/vsicurl/https://opentopography.s3.sdsc.edu/raster/NASADEM/NASADEM_be.vrt")
+             "/vsicurl/https://opentopography.s3.sdsc.edu/raster/COP90/COP90_hh.vrt",
+             "/vsicurl/https://opentopography.s3.sdsc.edu/raster/COP30/COP30_hh.vrt" )
+            # "/vsicurl/https://opentopography.s3.sdsc.edu/raster/NASADEM/NASADEM_be.vrt")
+    if (no_srtm30) rso <- rso[1:2] else rso <- rso[c(1, 3)]
     if (no_srtm) rso <- rso[1L]
     if (!no_srtm) print("SRTM in use, in addition to GEBCO")
+    print(rso)
   } else {
     rso <- source
   }
@@ -122,6 +131,7 @@ elevation <- function(extent = c(-180, 180, -90, 90), ..., dimension = NULL, pro
     x$projection <- ""
   }
   vals <- vapour::vapour_warp_raster_dbl(rso, extent = x$extent, dimension = x$dimension, projection = x$projection, resample = resample, ...)
+
   switch (x$type,
   terra =   terra::setValues(xraster, vals),
   raster =  raster::setValues(xraster, vals),
