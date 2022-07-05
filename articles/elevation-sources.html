@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">whatarelief</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.1.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.1.9002</span>
       </span>
     </div>
 
@@ -84,8 +84,8 @@
 <p>whatarelief provides two sources of topography, the first is a global topography and bathymetry dataset for the entire world in longitude/latitude (at roughly 500m resolution).</p>
 <p>To use these with GDAL we prepend ‘/vsicurl/’ which nominates the virtual handler to treat a url as a data source.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gebco</span> <span class="op">&lt;-</span> <span class="st">"/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2019_GEOTIFF/GEBCO_2019.tif"</span>
-<span class="va">nasadem</span> <span class="op">&lt;-</span> <span class="st">"/vsicurl/https://opentopography.s3.sdsc.edu/raster/NASADEM/NASADEM_be.vrt"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">gebco</span> <span class="op">&lt;-</span> <span class="st">"/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2019_GEOTIFF/GEBCO_2019.tif"</span></span>
+<span><span class="va">nasadem</span> <span class="op">&lt;-</span> <span class="st">"/vsicurl/https://opentopography.s3.sdsc.edu/raster/NASADEM/NASADEM_be.vrt"</span></span></code></pre></div>
 <p>GEBCO 2019 is a global bathymetric product released by the <a href="https://www.gebco.net/data_and_products/gridded_bathymetry_data/gebco_2019/gebco_2019_info.html" class="external-link">General Bathymetric Chart of the Oceans (GEBCO)</a> (GEBCO Compilation Group, 2019). The data was downloaded in its original NetCDF form and converted to tiled GeoTIFF with overviews (Cloud-optimized COG profile), and is provided by the Australian Antarctic Data Centre in COG form](<a href="https://data.aad.gov.au/metadata/GEBCO_2019_GEOTIFF" class="external-link uri">https://data.aad.gov.au/metadata/GEBCO_2019_GEOTIFF</a>).</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">writeLines</span>(vapour<span class="op">:::</span><span class="kw">gdalinfo_internal</span>(gebco, <span class="dt">json =</span> <span class="ot">FALSE</span>))</span>
 <span id="cb2-2"><a href="#cb2-2"></a></span>
@@ -236,7 +236,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer>
