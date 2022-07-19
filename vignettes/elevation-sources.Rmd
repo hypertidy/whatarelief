@@ -21,11 +21,11 @@ To use these with GDAL we prepend '/vsicurl/' which nominates the virtual handle
 
 ```R
 gebco <- "/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2019_GEOTIFF/GEBCO_2019.tif"
-nasadem <- "/vsicurl/https://opentopography.s3.sdsc.edu/raster/NASADEM/NASADEM_be.vrt"
+srtm <- "/vsicurl/https://opentopography.s3.sdsc.edu/raster/COP30/COP30_hh.vrt"
 
 ```
 
-GEBCO 2019 is a global bathymetric product released by the [General Bathymetric Chart of the Oceans (GEBCO)](https://www.gebco.net/data_and_products/gridded_bathymetry_data/gebco_2019/gebco_2019_info.html) (GEBCO Compilation Group, 2019). The data was downloaded in its original NetCDF form and converted to tiled GeoTIFF with overviews (Cloud-optimized COG profile), and is provided by the Australian Antarctic Data Centre in COG form](https://data.aad.gov.au/metadata/GEBCO_2019_GEOTIFF). 
+GEBCO 2021 is a global bathymetric product released by the [General Bathymetric Chart of the Oceans (GEBCO)](https://www.gebco.net/data_and_products/gridded_bathymetry_data/gebco_2021/) The data was downloaded in its original NetCDF form and converted to tiled GeoTIFF with overviews (Cloud-optimized COG profile), and is provided by the Australian Antarctic Data Centre in COG form](https://data.aad.gov.au/metadata/GEBCO_2021_GEOTIFF). 
 
 
 
@@ -119,13 +119,15 @@ Band 1 Block=512x512 Type=Float32, ColorInterp=Gray
     units=m
 ```
 
-NASADEM is a modernization of the Digital Elevation Model (DEM) and associated products generated from the Shuttle Radar Topography Mission (SRTM) data (NASA JPL, 2021). It is provided via a [OpenTopography data source](https://portal.opentopography.org/datasetMetadata?otCollectionID=OT.032021.4326.2) URIs of GeoTIFF files that are
+The Copernicus DEM is a Digital Surface Model (DSM) which represents the surface of the Earth including buildings, infrastructure and vegetation. This DSM is derived from an edited DSM named WorldDEM, where flattening of water bodies and consistent flow of rivers has been included. In addition, editing of shore- and coastlines, special features such as airports, and implausible terrain structures has also been applied. [OpenTopography data source](https://portal.opentopography.org/raster?opentopoID=OTSDEM.032021.4326.3) URIs of GeoTIFF files that are
 all included in one VRT (GDAL virtual format) file. 
 
 ```R
-writeLines(vapour:::gdalinfo_internal(nasadem, json = FALSE))
+writeLines(vapour:::gdalinfo_internal(srtm, json = FALSE))
 
-Size is 1288801, 421201
+...
+/vsicurl/https://opentopography.s3.sdsc.edu/raster/COP30/COP30_hh/Copernicus_DSM_COG_10_S07_00_E026_00_DEM.tif
+Size is 1296005, 626400
 Coordinate System is:
 GEOGCRS["WGS 84",
     DATUM["World Geodetic System 1984",
@@ -144,31 +146,32 @@ GEOGCRS["WGS 84",
 Data axis to CRS axis mapping: 2,1
 PROJ.4 string is:
 '+proj=longlat +datum=WGS84 +no_defs'
-Origin = (-179.000138888888898,61.000138888888891)
+Origin = (-180.001388888888897,84.000138888888884)
 Pixel Size = (0.000277777777778,-0.000277777777778)
 Metadata domains:
   DERIVED_SUBDATASETS
 Corner Coordinates:
-Upper Left  (-179.0001389,  61.0001389) (179d 0' 0.50"W, 61d 0' 0.50"N)
-Lower Left  (-179.0001389, -56.0001389) (179d 0' 0.50"W, 56d 0' 0.50"S)
-Upper Right ( 179.0001389,  61.0001389) (179d 0' 0.50"E, 61d 0' 0.50"N)
-Lower Right ( 179.0001389, -56.0001389) (179d 0' 0.50"E, 56d 0' 0.50"S)
-Center      (   0.0000000,   2.5000000) (  0d 0' 0.00"E,  2d30' 0.00"N)
-Band 1 Block=128x128 Type=Int16, ColorInterp=Gray
-  NoData Value=-32768
+Upper Left  (-180.0013889,  84.0001389) (180d 0' 5.00"W, 84d 0' 0.50"N)
+Lower Left  (-180.0013889, -89.9998611) (180d 0' 5.00"W, 89d59'59.50"S)
+Upper Right ( 180.0000000,  84.0001389) (180d 0' 0.00"E, 84d 0' 0.50"N)
+Lower Right ( 180.0000000, -89.9998611) (180d 0' 0.00"E, 89d59'59.50"S)
+Center      (  -0.0006944,  -2.9998611) (  0d 0' 2.50"W,  2d59'59.50"S)
+Band 1 Block=128x128 Type=Float32, ColorInterp=Gray
   Metadata domains:
     LocationInfo
 ```
 
-Show spatial coverage of NASADEM tiles ... TBD
+Show spatial coverage of SRTM tiles ... TBD
+
+
+
 
 
 
 ## References
 
-GEBCO Compilation Group (2019) GEBCO 2019 Grid (doi:10.5285/836f016a-33be-6ddc-e053-6c86abc0788e)
+GEBCO Compilation Group (2021) GEBCO 2021 Grid (doi:10.5285/c6612cbe-50b3-0cff-e053-6c86abc09f8f)
 
-NASA JPL (2021). NASADEM Merged DEM Global 1 arc second V001. Distributed by OpenTopography. https://doi.org/10.5069/G93T9FD9. Accessed: 2022-06-22
-
+European Space Agency, Sinergise (2021). Copernicus Global Digital Elevation Model. Distributed by OpenTopography. https://doi.org/10.5069/G9028PQB. Accessed: 2022-07-19
 
 

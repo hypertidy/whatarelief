@@ -115,7 +115,7 @@ Note that all the information we need is present, we provide the extent, and the
 We can provide our own sources of elevation. 
 
 Use the 'source' argument to `elevation()`, you can input multiple sources so that a higher resolution one has
-a fallback to a lower resolution one, note that by default we have "GEBCO 2019", then "NASADEM" in the sources. It doesn't matter what projection or extent these have, but usually a higher resolution one should be listed after lower. 
+a fallback to a lower resolution one, note that by default we have "GEBCO 2021", then "Copernicus GLO-30" in the sources. It doesn't matter what projection or extent these have, but usually a higher resolution one should be listed after lower. 
 
 For example, this string provides the Amazon compute S3 elevation tiles, an 'XYZ' image server that has geotiff elements but is not a georeferenced online service (hence this small bit of XML to wrap it up). 
 
@@ -136,11 +136,11 @@ image(rori(elevation(extent = c(-1, 1, -1, 1) * 1e7, projection = "+proj=laea +l
 
 ```
 
-But, we can fall back to our GEBCO 2019 source to fill the gap even with a custom source (note we can provide any number of sources, in any mix of extents and projections and resolutions). 
+But, we can fall back to our GEBCO 2021 source to fill the gap even with a custom source (note we can provide any number of sources, in any mix of extents and projections and resolutions). 
 
 
 ```{r fallback}
-gebco <- "/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2019_GEOTIFF/GEBCO_2019.tif"
+gebco <- "/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2021_GEOTIFF/GEBCO_2021.tif"
 m <- rori(elevation(source = c(gebco, aws)))
 image(seq(-180, 180, length.out = nrow(m)), seq(-90, 90, length.out = ncol(m)), m, asp = 1)
 maps::map(add = TRUE)

@@ -60,12 +60,10 @@ format_out <- function(x) {
 #'
 #' Note that data is streamed into memory, so don't make the dimensions of the 'x' target raster too big.
 #'
-#' To use these data, please attribute the use of GEBCO to the  GEBCO
-#' Compilation Group (2019) GEBCO 2019 Grid
-#' (doi:10.5285/836f016a-33be-6ddc-e053-6c86abc0788e), and the use of NASADEM to
-#' NASA JPL. NASADEM Merged DEM Global 1 arc second V001. 2020, distributed by
-#' NASA EOSDIS Land Processes DAAC,
-#' https://doi.org/10.5067/MEaSUREs/NASADEM/NASADEM_HGT.001.
+#' To use these data, please attribute the use of GEBCO to the  GEBCO Compilation Group (2021) GEBCO 2021
+#'  Grid (doi:10.5285/c6612cbe-50b3-0cff-e053-6c86abc09f8f), and the use of Copernicus GLO30 to
+#' European Space Agency, Sinergise (2021). Copernicus Global Digital Elevation Model.
+#' Distributed by OpenTopography. https://doi.org/10.5069/G9028PQB.
 #'
 #' @param extent a numeric vector of xmin,xmax,ymin,ymax or a terra or raster rast object
 #' @param ... arguments passed to 'vapour::vapour_warp_raster'
@@ -114,7 +112,7 @@ elevation <- function(extent = c(-180, 180, -90, 90), ..., dimension = NULL, pro
   }
 
   if (is.null(source)) {
-    rso <- c("/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2019_GEOTIFF/GEBCO_2019.tif",
+    rso <- c("/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2021_GEOTIFF/GEBCO_2021.tif",
              "/vsicurl/https://opentopography.s3.sdsc.edu/raster/COP90/COP90_hh.vrt",
              "/vsicurl/https://opentopography.s3.sdsc.edu/raster/COP30/COP30_hh.vrt" )
             # "/vsicurl/https://opentopography.s3.sdsc.edu/raster/NASADEM/NASADEM_be.vrt")
