@@ -85,8 +85,8 @@
 <p>To use these with GDAL we prepend ‘/vsicurl/’ which nominates the virtual handler to treat a url as a data source.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gebco</span> <span class="op">&lt;-</span> <span class="st">"/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2019_GEOTIFF/GEBCO_2019.tif"</span></span>
-<span><span class="va">nasadem</span> <span class="op">&lt;-</span> <span class="st">"/vsicurl/https://opentopography.s3.sdsc.edu/raster/NASADEM/NASADEM_be.vrt"</span></span></code></pre></div>
-<p>GEBCO 2019 is a global bathymetric product released by the <a href="https://www.gebco.net/data_and_products/gridded_bathymetry_data/gebco_2019/gebco_2019_info.html" class="external-link">General Bathymetric Chart of the Oceans (GEBCO)</a> (GEBCO Compilation Group, 2019). The data was downloaded in its original NetCDF form and converted to tiled GeoTIFF with overviews (Cloud-optimized COG profile), and is provided by the Australian Antarctic Data Centre in COG form](<a href="https://data.aad.gov.au/metadata/GEBCO_2019_GEOTIFF" class="external-link uri">https://data.aad.gov.au/metadata/GEBCO_2019_GEOTIFF</a>).</p>
+<span><span class="va">srtm</span> <span class="op">&lt;-</span> <span class="st">"/vsicurl/https://opentopography.s3.sdsc.edu/raster/COP30/COP30_hh.vrt"</span></span></code></pre></div>
+<p>GEBCO 2021 is a global bathymetric product released by the <a href="https://www.gebco.net/data_and_products/gridded_bathymetry_data/gebco_2021/" class="external-link">General Bathymetric Chart of the Oceans (GEBCO)</a> The data was downloaded in its original NetCDF form and converted to tiled GeoTIFF with overviews (Cloud-optimized COG profile), and is provided by the Australian Antarctic Data Centre in COG form](<a href="https://data.aad.gov.au/metadata/GEBCO_2021_GEOTIFF" class="external-link uri">https://data.aad.gov.au/metadata/GEBCO_2021_GEOTIFF</a>).</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">writeLines</span>(vapour<span class="op">:::</span><span class="kw">gdalinfo_internal</span>(gebco, <span class="dt">json =</span> <span class="ot">FALSE</span>))</span>
 <span id="cb2-2"><a href="#cb2-2"></a></span>
 <span id="cb2-3"><a href="#cb2-3"></a>Driver<span class="op">:</span><span class="st"> </span>GTiff<span class="op">/</span>GeoTIFF</span>
@@ -174,48 +174,49 @@
 <span id="cb2-85"><a href="#cb2-85"></a><span class="st">    sdn_uom_urn=SDN:P06::ULAA</span></span>
 <span id="cb2-86"><a href="#cb2-86"></a><span class="st">    standard_name=height_above_reference_ellipsoid</span></span>
 <span id="cb2-87"><a href="#cb2-87"></a><span class="st">    units=m</span></span></code></pre></div>
-<p>NASADEM is a modernization of the Digital Elevation Model (DEM) and associated products generated from the Shuttle Radar Topography Mission (SRTM) data (NASA JPL, 2021). It is provided via a <a href="https://portal.opentopography.org/datasetMetadata?otCollectionID=OT.032021.4326.2" class="external-link">OpenTopography data source</a> URIs of GeoTIFF files that are all included in one VRT (GDAL virtual format) file.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">writeLines</span>(vapour<span class="op">:::</span><span class="kw">gdalinfo_internal</span>(nasadem, <span class="dt">json =</span> <span class="ot">FALSE</span>))</span>
+<p>The Copernicus DEM is a Digital Surface Model (DSM) which represents the surface of the Earth including buildings, infrastructure and vegetation. This DSM is derived from an edited DSM named WorldDEM, where flattening of water bodies and consistent flow of rivers has been included. In addition, editing of shore- and coastlines, special features such as airports, and implausible terrain structures has also been applied. <a href="https://portal.opentopography.org/raster?opentopoID=OTSDEM.032021.4326.3" class="external-link">OpenTopography data source</a> URIs of GeoTIFF files that are all included in one VRT (GDAL virtual format) file.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">writeLines</span>(vapour<span class="op">:::</span><span class="kw">gdalinfo_internal</span>(srtm, <span class="dt">json =</span> <span class="ot">FALSE</span>))</span>
 <span id="cb3-2"><a href="#cb3-2"></a></span>
-<span id="cb3-3"><a href="#cb3-3"></a>Size is <span class="dv">1288801</span>, <span class="dv">421201</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a>Coordinate System is<span class="op">:</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a>GEOGCRS[<span class="st">"WGS 84"</span>,</span>
-<span id="cb3-6"><a href="#cb3-6"></a>    DATUM[<span class="st">"World Geodetic System 1984"</span>,</span>
-<span id="cb3-7"><a href="#cb3-7"></a>        ELLIPSOID[<span class="st">"WGS 84"</span>,<span class="dv">6378137</span>,<span class="fl">298.257223563</span>,</span>
-<span id="cb3-8"><a href="#cb3-8"></a>            LENGTHUNIT[<span class="st">"metre"</span>,<span class="dv">1</span>]]],</span>
-<span id="cb3-9"><a href="#cb3-9"></a>    PRIMEM[<span class="st">"Greenwich"</span>,<span class="dv">0</span>,</span>
-<span id="cb3-10"><a href="#cb3-10"></a>        ANGLEUNIT[<span class="st">"degree"</span>,<span class="fl">0.0174532925199433</span>]],</span>
-<span id="cb3-11"><a href="#cb3-11"></a>    CS[ellipsoidal,<span class="dv">2</span>],</span>
-<span id="cb3-12"><a href="#cb3-12"></a>        AXIS[<span class="st">"geodetic latitude (Lat)"</span>,north,</span>
-<span id="cb3-13"><a href="#cb3-13"></a>            ORDER[<span class="dv">1</span>],</span>
-<span id="cb3-14"><a href="#cb3-14"></a>            ANGLEUNIT[<span class="st">"degree"</span>,<span class="fl">0.0174532925199433</span>]],</span>
-<span id="cb3-15"><a href="#cb3-15"></a>        AXIS[<span class="st">"geodetic longitude (Lon)"</span>,east,</span>
-<span id="cb3-16"><a href="#cb3-16"></a>            ORDER[<span class="dv">2</span>],</span>
-<span id="cb3-17"><a href="#cb3-17"></a>            ANGLEUNIT[<span class="st">"degree"</span>,<span class="fl">0.0174532925199433</span>]],</span>
-<span id="cb3-18"><a href="#cb3-18"></a>    ID[<span class="st">"EPSG"</span>,<span class="dv">4326</span>]]</span>
-<span id="cb3-19"><a href="#cb3-19"></a>Data axis to CRS axis mapping<span class="op">:</span><span class="st"> </span><span class="dv">2</span>,<span class="dv">1</span></span>
-<span id="cb3-20"><a href="#cb3-20"></a>PROJ<span class="fl">.4</span> string is<span class="op">:</span></span>
-<span id="cb3-21"><a href="#cb3-21"></a><span class="st">'+proj=longlat +datum=WGS84 +no_defs'</span></span>
-<span id="cb3-22"><a href="#cb3-22"></a>Origin =<span class="st"> </span>(<span class="op">-</span><span class="fl">179.000138888888898</span>,<span class="fl">61.000138888888891</span>)</span>
-<span id="cb3-23"><a href="#cb3-23"></a>Pixel Size =<span class="st"> </span>(<span class="fl">0.000277777777778</span>,<span class="op">-</span><span class="fl">0.000277777777778</span>)</span>
-<span id="cb3-24"><a href="#cb3-24"></a>Metadata domains<span class="op">:</span></span>
-<span id="cb3-25"><a href="#cb3-25"></a><span class="st">  </span>DERIVED_SUBDATASETS</span>
-<span id="cb3-26"><a href="#cb3-26"></a>Corner Coordinates<span class="op">:</span></span>
-<span id="cb3-27"><a href="#cb3-27"></a>Upper <span class="kw">Left</span>  (<span class="op">-</span><span class="fl">179.0001389</span>,  <span class="fl">61.0001389</span>) (179d <span class="dv">0</span><span class="st">' 0.50"W, 61d 0'</span> <span class="fl">0.50</span><span class="st">"N)</span></span>
-<span id="cb3-28"><a href="#cb3-28"></a><span class="st">Lower Left  (-179.0001389, -56.0001389) (179d 0' 0.50"</span>W, 56d <span class="dv">0</span><span class="st">' 0.50"S)</span></span>
-<span id="cb3-29"><a href="#cb3-29"></a><span class="st">Upper Right ( 179.0001389,  61.0001389) (179d 0'</span> <span class="fl">0.50</span><span class="st">"E, 61d 0' 0.50"</span>N)</span>
-<span id="cb3-30"><a href="#cb3-30"></a>Lower <span class="kw">Right</span> ( <span class="fl">179.0001389</span>, <span class="fl">-56.0001389</span>) (179d <span class="dv">0</span><span class="st">' 0.50"E, 56d 0'</span> <span class="fl">0.50</span><span class="st">"S)</span></span>
-<span id="cb3-31"><a href="#cb3-31"></a><span class="st">Center      (   0.0000000,   2.5000000) (  0d 0' 0.00"</span>E,  2d30<span class="st">' 0.00"N)</span></span>
-<span id="cb3-32"><a href="#cb3-32"></a><span class="st">Band 1 Block=128x128 Type=Int16, ColorInterp=Gray</span></span>
-<span id="cb3-33"><a href="#cb3-33"></a><span class="st">  NoData Value=-32768</span></span>
-<span id="cb3-34"><a href="#cb3-34"></a><span class="st">  Metadata domains:</span></span>
-<span id="cb3-35"><a href="#cb3-35"></a><span class="st">    LocationInfo</span></span></code></pre></div>
-<p>Show spatial coverage of NASADEM tiles … TBD</p>
+<span id="cb3-3"><a href="#cb3-3"></a>...</span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="op">/</span>vsicurl<span class="op">/</span>https<span class="op">:</span><span class="er">//</span>opentopography.s3.sdsc.edu<span class="op">/</span>raster<span class="op">/</span>COP30<span class="op">/</span>COP30_hh<span class="op">/</span>Copernicus_DSM_COG_<span class="dv">10</span>_S07_<span class="dv">00</span>_E026_<span class="dv">00</span>_DEM.tif</span>
+<span id="cb3-5"><a href="#cb3-5"></a>Size is <span class="dv">1296005</span>, <span class="dv">626400</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>Coordinate System is<span class="op">:</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a>GEOGCRS[<span class="st">"WGS 84"</span>,</span>
+<span id="cb3-8"><a href="#cb3-8"></a>    DATUM[<span class="st">"World Geodetic System 1984"</span>,</span>
+<span id="cb3-9"><a href="#cb3-9"></a>        ELLIPSOID[<span class="st">"WGS 84"</span>,<span class="dv">6378137</span>,<span class="fl">298.257223563</span>,</span>
+<span id="cb3-10"><a href="#cb3-10"></a>            LENGTHUNIT[<span class="st">"metre"</span>,<span class="dv">1</span>]]],</span>
+<span id="cb3-11"><a href="#cb3-11"></a>    PRIMEM[<span class="st">"Greenwich"</span>,<span class="dv">0</span>,</span>
+<span id="cb3-12"><a href="#cb3-12"></a>        ANGLEUNIT[<span class="st">"degree"</span>,<span class="fl">0.0174532925199433</span>]],</span>
+<span id="cb3-13"><a href="#cb3-13"></a>    CS[ellipsoidal,<span class="dv">2</span>],</span>
+<span id="cb3-14"><a href="#cb3-14"></a>        AXIS[<span class="st">"geodetic latitude (Lat)"</span>,north,</span>
+<span id="cb3-15"><a href="#cb3-15"></a>            ORDER[<span class="dv">1</span>],</span>
+<span id="cb3-16"><a href="#cb3-16"></a>            ANGLEUNIT[<span class="st">"degree"</span>,<span class="fl">0.0174532925199433</span>]],</span>
+<span id="cb3-17"><a href="#cb3-17"></a>        AXIS[<span class="st">"geodetic longitude (Lon)"</span>,east,</span>
+<span id="cb3-18"><a href="#cb3-18"></a>            ORDER[<span class="dv">2</span>],</span>
+<span id="cb3-19"><a href="#cb3-19"></a>            ANGLEUNIT[<span class="st">"degree"</span>,<span class="fl">0.0174532925199433</span>]],</span>
+<span id="cb3-20"><a href="#cb3-20"></a>    ID[<span class="st">"EPSG"</span>,<span class="dv">4326</span>]]</span>
+<span id="cb3-21"><a href="#cb3-21"></a>Data axis to CRS axis mapping<span class="op">:</span><span class="st"> </span><span class="dv">2</span>,<span class="dv">1</span></span>
+<span id="cb3-22"><a href="#cb3-22"></a>PROJ<span class="fl">.4</span> string is<span class="op">:</span></span>
+<span id="cb3-23"><a href="#cb3-23"></a><span class="st">'+proj=longlat +datum=WGS84 +no_defs'</span></span>
+<span id="cb3-24"><a href="#cb3-24"></a>Origin =<span class="st"> </span>(<span class="op">-</span><span class="fl">180.001388888888897</span>,<span class="fl">84.000138888888884</span>)</span>
+<span id="cb3-25"><a href="#cb3-25"></a>Pixel Size =<span class="st"> </span>(<span class="fl">0.000277777777778</span>,<span class="op">-</span><span class="fl">0.000277777777778</span>)</span>
+<span id="cb3-26"><a href="#cb3-26"></a>Metadata domains<span class="op">:</span></span>
+<span id="cb3-27"><a href="#cb3-27"></a><span class="st">  </span>DERIVED_SUBDATASETS</span>
+<span id="cb3-28"><a href="#cb3-28"></a>Corner Coordinates<span class="op">:</span></span>
+<span id="cb3-29"><a href="#cb3-29"></a>Upper <span class="kw">Left</span>  (<span class="op">-</span><span class="fl">180.0013889</span>,  <span class="fl">84.0001389</span>) (180d <span class="dv">0</span><span class="st">' 5.00"W, 84d 0'</span> <span class="fl">0.50</span><span class="st">"N)</span></span>
+<span id="cb3-30"><a href="#cb3-30"></a><span class="st">Lower Left  (-180.0013889, -89.9998611) (180d 0' 5.00"</span>W, 89d59<span class="st">'59.50"S)</span></span>
+<span id="cb3-31"><a href="#cb3-31"></a><span class="st">Upper Right ( 180.0000000,  84.0001389) (180d 0'</span> <span class="fl">0.00</span><span class="st">"E, 84d 0' 0.50"</span>N)</span>
+<span id="cb3-32"><a href="#cb3-32"></a>Lower <span class="kw">Right</span> ( <span class="fl">180.0000000</span>, <span class="fl">-89.9998611</span>) (180d <span class="dv">0</span><span class="st">' 0.00"E, 89d59'</span><span class="fl">59.50</span><span class="st">"S)</span></span>
+<span id="cb3-33"><a href="#cb3-33"></a><span class="st">Center      (  -0.0006944,  -2.9998611) (  0d 0' 2.50"</span>W,  2d59<span class="st">'59.50"S)</span></span>
+<span id="cb3-34"><a href="#cb3-34"></a><span class="st">Band 1 Block=128x128 Type=Float32, ColorInterp=Gray</span></span>
+<span id="cb3-35"><a href="#cb3-35"></a><span class="st">  Metadata domains:</span></span>
+<span id="cb3-36"><a href="#cb3-36"></a><span class="st">    LocationInfo</span></span></code></pre></div>
+<p>Show spatial coverage of SRTM tiles … TBD</p>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<p>GEBCO Compilation Group (2019) GEBCO 2019 Grid (<a href="doi:10.5285/836f016a-33be-6ddc-e053-6c86abc0788e" class="uri">doi:10.5285/836f016a-33be-6ddc-e053-6c86abc0788e</a>)</p>
-<p>NASA JPL (2021). NASADEM Merged DEM Global 1 arc second V001. Distributed by OpenTopography. <a href="https://doi.org/10.5069/G93T9FD9" class="external-link uri">https://doi.org/10.5069/G93T9FD9</a>. Accessed: 2022-06-22</p>
+<p>GEBCO Compilation Group (2021) GEBCO 2021 Grid (<a href="doi:10.5285/c6612cbe-50b3-0cff-e053-6c86abc09f8f" class="uri">doi:10.5285/c6612cbe-50b3-0cff-e053-6c86abc09f8f</a>)</p>
+<p>European Space Agency, Sinergise (2021). Copernicus Global Digital Elevation Model. Distributed by OpenTopography. <a href="https://doi.org/10.5069/G9028PQB" class="external-link uri">https://doi.org/10.5069/G9028PQB</a>. Accessed: 2022-07-19</p>
 </div>
   </div>
 
@@ -236,7 +237,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
