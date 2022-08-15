@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 ```
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/mdsumner/whatarelief/workflows/R-CMD-check/badge.svg)](https://github.com/mdsumner/whatarelief/actions)
+[![R-CMD-check](https://github.com/hypertidy/whatarelief/workflows/R-CMD-check/badge.svg)](https://github.com/hypertidy/whatarelief/actions)
 <!-- badges: end -->
 
 # whatarelief

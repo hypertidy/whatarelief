@@ -44,7 +44,7 @@ format_out <- function(x) {
   if (inherits(x, "numeric")) {
 
     if (is.null(projection)) projection <- "OGC:CRS84"
-    if (is.null(dimension)) dimension <- as.integer(256 * sort(c(1, diff(x[1:2])/diff(x[3:4])), decreasing = TRUE) )
+    if (is.null(dimension)) dimension <- as.integer(256 * sort(c(1, diff(x[1:2])/diff(x[3:4])), decreasing = FALSE) )
     lonlat <- grepl("lonlat", projection) || grepl("4326", projection) || grepl("4269", projection) || grepl("OGC:CRS84", projection)
     x <- list(extent = x, dimension = dimension, projection = projection, lonlat = lonlat, type = "matrix")
   }

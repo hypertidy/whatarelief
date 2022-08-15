@@ -1,6 +1,8 @@
 # whatarelief dev
 
 
+* Fix dimension. 
+
 * Add `streetmap()` currently getting OSM image, same support as 'imagery()'.  Internal object `.streetmap_sources` has
 openstreetmap, google, virtual earth, esri. 
 
