@@ -26,3 +26,5 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+URL: https://github.com/hypertidy/whatarelief
+BugReports: https://github.com/hypertidy/whatarelief/issues
