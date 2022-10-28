@@ -21,7 +21,9 @@
 #'
 #' Note that data is streamed into memory, so don't make the dimensions of the 'x' target raster too big.
 #'
-#' To use these data, please attribute
+#' By default we're expecting 3 bands of bytes, but if only one is available that is used instead.
+#'
+#' To use these data, please attribute Virtual Earth, otherwise use your own sources.
 #'
 #' @param extent a numeric vector of xmin,xmax,ymin,ymax or a terra or raster rast object
 #' @param ... arguments passed to 'vapour::vapour_warp_raster'
@@ -63,8 +65,15 @@ imagery <- function(extent = c(-180, 180, -90, 90), ..., dimension = NULL, proje
     message("no projection specified, calling warper without a target projection: results not guaranteed")
     x$projection <- ""
   }
-  vals <- vapour::vapour_warp_raster_hex(rso, extent = x$extent, dimension = x$dimension, projection = x$projection, resample = resample, ..., bands = 1:3)
+  ## check bands
+  info <- vapour::vapour_raster_info(rso[1])
+  if (info$bands < 3) {
+  vals <- vapour::vapour_warp_raster_hex(rso, extent = x$extent, dimension = x$dimension, projection = x$projection, resample = resample, ..., bands = 1)
+  } else {
 
+
+  vals <- vapour::vapour_warp_raster_hex(rso, extent = x$extent, dimension = x$dimension, projection = x$projection, resample = resample, ..., bands = 1:3)
+}
   switch (x$type,
           terra =   terra::setValues(xraster, vals),
           raster =  raster::setValues(xraster, vals),

@@ -1,5 +1,6 @@
 # whatarelief dev
 
+* imagerY() detects case on one (less than 3) bands in the source. 
 
 * Fix dimension. 
 

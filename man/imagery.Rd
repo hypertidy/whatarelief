@@ -47,7 +47,9 @@ Originally using OSM.
 
 Note that data is streamed into memory, so don't make the dimensions of the 'x' target raster too big.
 
-To use these data, please attribute
+By default we're expecting 3 bands of bytes, but if only one is available that is used instead.
+
+To use these data, please attribute Virtual Earth, otherwise use your own sources.
 }
 \examples{
 
