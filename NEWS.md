@@ -1,5 +1,7 @@
 # whatarelief dev
 
+* New 'coastline()' function. 
+
 * imagerY() detects case on one (less than 3) bands in the source. 
 
 * Fix dimension. 
