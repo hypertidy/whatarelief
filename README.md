@@ -20,7 +20,7 @@ Here you’ll find functions
 
 -   [elevation()](https://hypertidy.github.io/whatarelief/reference/elevation.html)
 -   [imagery()](https://hypertidy.github.io/whatarelief/reference/imagery.html)
--   [streetmap()](https://hypertidy.github.io/whatarelief/reference/streetmap.html)
+-   [streetmap()](https://hypertidy.github.io/whatarelief/reference/imagery.html)
 -   [coastline()](https://hypertidy.github.io/whatarelief/reference/coastline.html)
 
 and it’s pretty obvious what they do. What isn’t so obvious is that they
