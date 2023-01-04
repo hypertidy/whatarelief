@@ -14,7 +14,7 @@ There is a world full of online data sources for bio/physical variables,
 elevation, and imagery, and we of course use the GDAL warper app lib as
 the most general and convenient engine for working with raster sources.
 There is no grand catalogue of these sources or how to use them, so we
-just grabbed them and made some helpers.
+left that for later, grabbed some sources and made some helpers.
 
 Here you’ll find functions
 
@@ -31,21 +31,21 @@ online sources, just provide whatever you want.
 
 We just have trouble naming things.
 
-`imagery()` and `streetmap()` just default to satellite+aerial imagery,
-and drawings of street layers respectively.
+`imagery()` and `streetmap()` default to satellite+aerial imagery, and
+drawings of street layers respectively.
 
-`coastline()` just generates coordinates from a elevation source at
-level = 0, to give a “coast line” of sorts.
+`coastline()` generates coordinates from a elevation source at level =
+0, to give a “coast line” of sorts.
 
 All of these functions have arguments *extent*, *dimension*,
 *projection* - the three key components that make up a raster. Just
 specify them to get what you want.
 
 We have been careful to align to the *raster orientation*, which in R is
-the ‘rasterImage()’ convention, this matches the order in which the data
+the `rasterImage()` convention, this matches the order in which the data
 are returned but still requires care because it’s confusing.
 
-We don’t like that ‘rasterImage()’ and its second cousin ‘image()’ have
+We don’t like that `rasterImage()` and its second cousin `image()` have
 a different set of incomplete features with these different
 orientations, so we use the helper
 [ximage()](httsp://github.com/hypertidy/whatarelief.git) so we can work
@@ -79,8 +79,9 @@ image(t(im[nrow(im):1, ]))
 
 <img src="man/figures/README-elevation-2.png" width="100%" />
 
-We don’t want any special handling, so just use the [ximage]() package
-🚀.
+We don’t want any special handling, so use the
+[ximage](https://github.com/hypertidy/ximage) package functions
+`ximage()` and `xcontour()` 🚀.
 
 ``` r
 library(ximage)
