@@ -13,7 +13,7 @@
 #' @param dimension optional size of matrix to contour (a default is used)
 #' @param projection provide this for custom extents in a given projection
 #'
-#' @return
+#' @return matrix of coordinates in longlat (or whatever projection is specified)
 #' @export
 #'
 #' @examples

@@ -2,33 +2,62 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/mdsumner/whatarelief/workflows/R-CMD-check/badge.svg)](https://github.com/mdsumner/whatarelief/actions)
+[![R-CMD-check](https://github.com/hypertidy/whatarelief/workflows/R-CMD-check/badge.svg)](https://github.com/hypertidy/whatarelief/actions)
 <!-- badges: end -->
 
 # whatarelief
 
-The goal of whatarelief is to obtain elevation data.
+The goal of whatarelief is to obtain *raster* data, from a *cloud* … of
+course …
 
-PLEASE NOTE: when originally set up this package use ‘image()’
-orientation for the returned data. We are working towards better
-consistency by using ‘rasterImage()’ orientation, this matches the order
-in which the data are returned but requires care because it’s confusing.
-‘rasterImage()’ is also very low level and hard to use, so we are
-looking at some helpers.
+There is a world full of online data sources for bio/physical variables,
+elevation, and imagery, and we of course use the GDAL warper app lib as
+the most general and convenient engine for working with raster sources.
+There is no grand catalogue of these sources or how to use them, so we
+just grabbed them and made some helpers.
 
-In the below a “reorientation” function is used throughout, whenever
-‘image()’ and ‘contour()’ are used, and there is a terra step where
-nrow/ncol is confusing compared to what R’s `dim()` order is. We think
-the ‘rasterImage()’ orientation is the right way forward, and to move
-from using ‘image()’ to some new helpers.
+Here you’ll find functions
+
+-   [elevation()](https://hypertidy.github.io/whatarelief/reference/elevation.html)
+-   [imagery()](https://hypertidy.github.io/whatarelief/reference/imagery.html)
+-   [streetmap()](https://hypertidy.github.io/whatarelief/reference/streetmap.html)
+-   [coastline()](https://hypertidy.github.io/whatarelief/reference/coastline.html)
+
+and it’s pretty obvious what they do. What isn’t so obvious is that they
+aren’t really specific to their name, `elevation()` for example can look
+up any raster data source (file, url, anything GDAL understands), just
+use the ‘source’ argument. This also means we don’t have to use the
+online sources, just provide whatever you want.
+
+We just have trouble naming things.
+
+`imagery()` and `streetmap()` just default to satellite+aerial imagery,
+and drawings of street layers respectively.
+
+`coastline()` just generates coordinates from a elevation source at
+level = 0, to give a “coast line” of sorts.
+
+All of these functions have arguments *extent*, *dimension*,
+*projection* - the three key components that make up a raster. Just
+specify them to get what you want.
+
+We have been careful to align to the *raster orientation*, which in R is
+the ‘rasterImage()’ convention, this matches the order in which the data
+are returned but still requires care because it’s confusing.
+
+We don’t like that ‘rasterImage()’ and its second cousin ‘image()’ have
+a different set of incomplete features with these different
+orientations, so we use the helper
+[ximage()](httsp://github.com/hypertidy/whatarelief.git) so we can work
+easily at a high level for visualization.
 
 ## Installation
 
 You can install the development version of whatarelief from
-[Github](https://github.com/mdsumner/whatarelief) with:
+[Github](https://github.com/hypertidy/whatarelief) with:
 
 ``` r
-remotes::install_github("mdsumner/whatarelief")
+remotes::install_github("hypertidy/whatarelief")
 ```
 
 ## Get elevation data
@@ -50,38 +79,53 @@ image(t(im[nrow(im):1, ]))
 
 <img src="man/figures/README-elevation-2.png" width="100%" />
 
-``` r
-rori <- function(x) t(x[nrow(x):1, ])
-x0 <- elevation(extent = c(120, 160, 30, 50))
-#> [1] "/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2021_GEOTIFF/GEBCO_2021.tif"
-image(rori(x0), col = hcl.colors(24))
-contour(rori(x0), add = TRUE, levels = 10)
-```
-
-<img src="man/figures/README-elevation-3.png" width="100%" />
+We don’t want any special handling, so just use the [ximage]() package
+🚀.
 
 ``` r
-
-image(rori(elevation(extent = c(120, 160, 30, 50), dimension = dev.size("px"))))
-#> [1] "/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2021_GEOTIFF/GEBCO_2021.tif"
+library(ximage)
+ximage(im, extent = c(-180, 180, -90, 90))
 ```
 
-<img src="man/figures/README-elevation-4.png" width="100%" />
-
-``` r
-image(rori(elevation(extent = c(120, 160, -50, -20), dimension = c(60, 85), resample = "near")))
-#> [1] "/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2021_GEOTIFF/GEBCO_2021.tif"
-```
-
-<img src="man/figures/README-elevation-5.png" width="100%" />
+<img src="man/figures/README-ximage-1.png" width="100%" />
 
 ``` r
 
-image(rori(elevation(extent = c(-1, 1, -1, 1) * 5e6, projection = "+proj=lcc +lon_0=-85 +lat_0=-42 +lat_1=0 +lat_2=-30")))
+
+ex <- c(120, 160, 30, 50)
+x0 <- elevation(extent = ex)
+#> [1] "/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2021_GEOTIFF/GEBCO_2021.tif"
+ximage(x0, col = hcl.colors(24), extent = ex)
+xcontour(x0, add = TRUE, levels = 10, extent = ex)
+```
+
+<img src="man/figures/README-ximage-2.png" width="100%" />
+
+``` r
+
+
+ximage(elevation(extent = c(120, 160, 30, 50), dimension = dev.size("px")))
 #> [1] "/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2021_GEOTIFF/GEBCO_2021.tif"
 ```
 
-<img src="man/figures/README-elevation-6.png" width="100%" />
+<img src="man/figures/README-ximage-3.png" width="100%" />
+
+``` r
+
+ximage(elevation(extent = c(120, 160, -50, -20), dimension = c(60, 85), resample = "near"))
+#> [1] "/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2021_GEOTIFF/GEBCO_2021.tif"
+```
+
+<img src="man/figures/README-ximage-4.png" width="100%" />
+
+``` r
+
+ex <- c(-1, 1, -1, 1) * 5e6
+ximage(elevation(extent = ex, projection = "+proj=lcc +lon_0=-85 +lat_0=-42 +lat_1=0 +lat_2=-30"), extent = ex)
+#> [1] "/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2021_GEOTIFF/GEBCO_2021.tif"
+```
+
+<img src="man/figures/README-ximage-5.png" width="100%" />
 
 Can use a raster object.
 
@@ -93,7 +137,7 @@ elevation(terra::rast())
 #> resolution  : 1, 1  (x, y)
 #> extent      : -180, 180, -90, 90  (xmin, xmax, ymin, ymax)
 #> coord. ref. : lon/lat WGS 84 
-#> source      : memory 
+#> source(s)   : memory
 #> name        : lyr.1 
 #> min value   : -7189 
 #> max value   :  5332
@@ -107,7 +151,7 @@ r
 #> resolution  : 9765.625, 9765.625  (x, y)
 #> extent      : -5e+06, 5e+06, -5e+06, 5e+06  (xmin, xmax, ymin, ymax)
 #> coord. ref. : +proj=lcc +lat_0=-42 +lon_0=-85 +lat_1=0 +lat_2=-30 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs 
-#> source      : memory 
+#> source(s)   : memory
 #> name        : lyr.1 
 #> min value   : -7937 
 #> max value   :  5579
@@ -126,7 +170,7 @@ elev <- elevation(extent = ex)
 #> [1] "SRTM in use, in addition to GEBCO"
 #> [1] "/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2021_GEOTIFF/GEBCO_2021.tif"
 #> [2] "/vsicurl/https://opentopography.s3.sdsc.edu/raster/COP30/COP30_hh.vrt"
-image(rori(elev), zlim = c(0, max(elev)))
+ximage(elev, zlim = c(0, max(elev)), extent = ex)
 ```
 
 <img src="man/figures/README-resolution-1.png" width="100%" />
@@ -140,8 +184,8 @@ elev <- elevation(extent = ex)
 #> [1] "SRTM in use, in addition to GEBCO"
 #> [1] "/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2021_GEOTIFF/GEBCO_2021.tif"
 #> [2] "/vsicurl/https://opentopography.s3.sdsc.edu/raster/COP30/COP30_hh.vrt"
-image(rori(elev), zlim = c(0, max(elev)))
-contour(rori(elev), levels = 5, add = TRUE)
+ximage(elev, zlim = c(0, max(elev)), extent = ex)
+xcontour(elev,  extent = ex, levels = 5, add = TRUE)
 ```
 
 <img src="man/figures/README-correct-1.png" width="100%" />
@@ -151,7 +195,7 @@ use the available tools.
 
 ``` r
 library(terra)
-#> terra 1.5.34
+#> terra 1.6.33
 ## note the data come out in rasterImage order, so the columns/rows are switched here
 template <- terra::rast(terra::ext(ex), ncols = dim(elev)[2L], nrows = dim(elev)[1L], crs = "OGC:CRS84")
 plot(setValues(template, elev))
@@ -192,8 +236,9 @@ Using this, we can obtain a global summary of the available data. Sadly,
 these data are not quite global.
 
 ``` r
-m <- rori(elevation(source = aws))
-image(seq(-180, 180, length.out = nrow(m)), seq(-90, 90, length.out = ncol(m)), m, asp = 1)
+m <- elevation(source = aws)
+## we can use the old ways, just get the orientation right :)
+image(seq(-180, 180, length.out = ncol(m)), seq(-90, 90, length.out = nrow(m)), t(m[nrow(m):1, ]), asp = 1)
 maps::map(add = TRUE)
 abline(h = c(-90, 90), lwd = 2)
 ```
@@ -201,7 +246,9 @@ abline(h = c(-90, 90), lwd = 2)
 <img src="man/figures/README-aws-global-1.png" width="100%" />
 
 ``` r
-image(rori(elevation(extent = c(-1, 1, -1, 1) * 1e7, projection = "+proj=laea +lat_0=-90", source = aws)), asp = 1)
+
+ex <- c(-1, 1, -1, 1) * 1e7
+ximage(elevation(extent = ex, projection = "+proj=laea +lat_0=-90", source = aws), asp = 1, extent = ex)
 ```
 
 <img src="man/figures/README-aws-global-2.png" width="100%" />
@@ -212,8 +259,8 @@ of extents and projections and resolutions).
 
 ``` r
 gebco <- "/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2021_GEOTIFF/GEBCO_2021.tif"
-m <- rori(elevation(source = c(gebco, aws)))
-image(seq(-180, 180, length.out = nrow(m)), seq(-90, 90, length.out = ncol(m)), m, asp = 1)
+m <- elevation(source = c(gebco, aws))
+ximage(m, extent = c(-180, 180, -90, 90), asp = 1)
 maps::map(add = TRUE)
 abline(h = c(-90, 90), lwd = 2)
 ```
@@ -221,15 +268,26 @@ abline(h = c(-90, 90), lwd = 2)
 <img src="man/figures/README-fallback-1.png" width="100%" />
 
 ``` r
-image(rori(elevation(extent = c(-1, 1, -1, 1) * 1e7, projection = "+proj=laea +lat_0=-90", source = c(gebco, aws))))
+
+ximage(elevation(extent = c(-1, 1, -1, 1) * 1e7, projection = "+proj=laea +lat_0=-90", source = c(gebco, aws)), extent = c(-1, 1, -1, 1) * 1e7)
 ```
 
 <img src="man/figures/README-fallback-2.png" width="100%" />
 
+## Get coastlines
+
+``` r
+cst <- coastline(extent = c(-180, 180, -90, 0))
+#> [1] "/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2021_GEOTIFF/GEBCO_2021.tif"
+plot(cst, type = "b", pch = ".")
+```
+
+<img src="man/figures/README-coastline-1.png" width="100%" />
+
 ## Properties of the sources in use
 
 See vignette
-[elevation-sources](https://mdsumner.github.io/whatarelief/articles/elevation-sources.html).
+[elevation-sources](https://hypertidy.github.io/whatarelief/articles/elevation-sources.html).
 
 Note that, we could use any raster data of any kind here as custom
 ’source’s … (we’re figuring out how to frame this package in general
@@ -240,21 +298,19 @@ terms, that aren’t too “spatial”).
 We are working out some ways of accessing data used by the raadtools
 project.
 
-Please don’t rely on them.
+Please don’t rely on them, not working ATM (very WIP in our raadtools
+project too).
 
 ``` r
 library(whatarelief)
 files <- raad_source("nsidc_25km_seaice")
 names(files)
-#> [1] "date"          "north_vrt_dsn" "south_vrt_dsn"
 idx <- which.max(files$date)
 
 mat <- elevation(source = unlist(files[idx, c("north_vrt_dsn", "south_vrt_dsn")]))
 brks <- quantile(mat[mat <= 250 & mat > 0], seq(0, 1, length.out = 16))
-image(rori(mat), col = grey.colors(length(brks) - 1), breaks = brks, main = files$date[idx])
+ximage(mat, col = grey.colors(length(brks) - 1), breaks = brks, main = files$date[idx])
 ```
-
-<img src="man/figures/README-nsidc-1.png" width="100%" />
 
 ## Code of Conduct
 

@@ -1,7 +1,7 @@
 ## from https://gist.github.com/mdsumner/b6d210a2974726151c5d206ebef1a7f2
 terra_out <-
   function(x) {
-
+    ## stopifnot(requireNamespace("terra"))
     if (isS4(x) && inherits(x, "SpatRaster")) {
       x <- try(list(extent = c(terra::xmin(x), terra::xmax(x), terra::ymin(x), terra::ymax(x)),
                     dimension = dim(x)[2:1],
@@ -14,6 +14,7 @@ terra_out <-
 
 raster_out <- function(x) {
   if (isS4(x) && inherits(x, "BasicRaster")) {
+       ## stopifnot(requireNamespace("raster"))
     ## we have a {raster}
     x <- list(extent = c(x@extent@xmin, x@extent@xmax, x@extent@ymin, x@extent@ymax),
               dimension = c(x@ncols, x@nrows),
@@ -166,16 +167,16 @@ rasterdata <- function(source, dimension = NULL, extent = NULL, ..., projection 
   elevation(source = source, dimension = dimension, extent = info$extent, projection = info$projection, resample = resample, ...)
 }
 
-.getrasterdata <- function(x) {
-  if (is.na(x$projection)) {
-    message("no projection specified, calling warper without a target projection: results not guaranteed")
-    x$projection <- ""
-  }
-  vals <- vapour::vapour_warp_raster_dbl(rso, extent = x$extent, dimension = x$dimension, projection = x$projection, resample = resample, ...)
-
-  switch (x$type,
-  terra =   terra::setValues(xraster, vals),
-  raster =  raster::setValues(xraster, vals),
-  matrix = matrix(vals, x$dimension[2L], byrow = TRUE))#[,x$dimension[2L]:1])
-
-}
+# .getrasterdata <- function(x) {
+#   if (is.na(x$projection)) {
+#     message("no projection specified, calling warper without a target projection: results not guaranteed")
+#     x$projection <- ""
+#   }
+#   vals <- vapour::vapour_warp_raster_dbl(rso, extent = x$extent, dimension = x$dimension, projection = x$projection, resample = resample, ...)
+# 
+#   switch (x$type,
+#   terra =   terra::setValues(xraster, vals),
+#   raster =  raster::setValues(xraster, vals),
+#   matrix = matrix(vals, x$dimension[2L], byrow = TRUE))#[,x$dimension[2L]:1])
+# 
+# }

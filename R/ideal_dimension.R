@@ -1,3 +1,9 @@
+#' Internal for now
+#' 
+#' @noRd
+#' @importFrom grDevices dev.cur dev.size  contourLines
+#' @importFrom graphics par
+#' @importFrom utils head
 .ideal_dimension <- function(dimension = 1024, extent = NULL) {
   if (dev.cur() > 1L) {
     px <- ceiling(dev.size("px") * par("pin")/dev.size())

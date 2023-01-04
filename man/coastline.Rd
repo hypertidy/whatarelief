@@ -15,6 +15,9 @@ coastline(extent = NULL, ..., dimension = c(1024, 1024), projection = NULL)
 
 \item{projection}{provide this for custom extents in a given projection}
 }
+\value{
+matrix of coordinates in longlat (or whatever projection is specified)
+}
 \description{
 Get a coatline for any region on Earth.
 }
