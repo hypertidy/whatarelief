@@ -31,4 +31,5 @@ If no device is open and no extent given, a coastline for longlat is given.
 }
 \examples{
 plot(coastline(extent = c(-180, 180, -90, 90)), type = "l")
+
 }

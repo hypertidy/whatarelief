@@ -2,13 +2,57 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/hypertidy/whatarelief/workflows/R-CMD-check/badge.svg)](https://github.com/hypertidy/whatarelief/actions)
+[![R-CMD-check](https://github.com/hypertidy/whatarelief/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/hypertidy/whatarelief/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 # whatarelief
 
-The goal of whatarelief is to obtain *raster* data, from a *cloud* … of
-course …
+The goal of whatarelief is to obtain *raster* data, for exactly the map
+that you want. No need to open, crop, resize, aggregate, call out to
+command line or faff around with files or format.
+
+There are raster sources, and whatarelief knows about online elevation
+and imagery so you don’t have to, just specify what what you want. Any
+extent, any projection.
+
+``` r
+library(whatarelief)
+## in global Mercator projection Australia's box extent is 7100km  wide and 4500km high and its southwest 
+## point is 11700km east and 5500km south of the prime meridian and equator
+p0 <- c(11700000, -5500000)
+ex <- rep(p0, each = 2L) + c(0, 7100000, 0, 4500000)
+
+## 1024 is a enough to make a picture
+dm <- c(1024, 1024 * 4.5/7.1)  ## set the aspect ratio so our dimensions match our extent proportions
+
+img <- imagery(extent = ex, dimension = dm, projection = "EPSG:3857")
+cst <- coastline(extent = ex, dimension = dm, projection = "EPSG:3857")
+#> [1] "/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2021_GEOTIFF/GEBCO_2021.tif"
+ximage::ximage(img, extent = ex, asp = 1)
+lines(cst, col = "saddlebrown")
+```
+
+<img src="man/figures/README-want-1.png" width="100%" />
+
+Please note that the hard part up there is get *six numbers*, these are
+*extent: xmin,xmax,ymin,ymax* and *dimension: ncol,nrow*. Normally we
+have these at hand, for example the state.center data set in R, and our
+device size:
+
+``` r
+sc <- datasets::state.center
+ex <- c(range(sc$x), range(sc$y))
+dm <- dev.size("px")
+img <- imagery(extent = ex, dimension = dm, projection = "OGC:CRS84", resample = "bilinear")
+ximage::ximage(img, extent = ex, asp = 1/cos(mean(ex[3:4]) * pi/180))
+points(sc$x, sc$y, col = "firebrick", pch = 19)
+```
+
+<img src="man/figures/README-quakes-1.png" width="100%" />
+
+We have this example upfront because it’s the most important part, and
+we don’t have helpers yet for choosing the right dimension. You are free
+to do what you want.
 
 There is a world full of online data sources for bio/physical variables,
 elevation, and imagery, and we of course use the GDAL warper app lib as
@@ -16,30 +60,35 @@ the most general and convenient engine for working with raster sources.
 There is no grand catalogue of these sources or how to use them, so we
 left that for later, grabbed some sources and made some helpers.
 
-Here you’ll find functions
+Here you’ll find functions with clear names about what they provide.
 
 -   [elevation()](https://hypertidy.github.io/whatarelief/reference/elevation.html)
 -   [imagery()](https://hypertidy.github.io/whatarelief/reference/imagery.html)
 -   [streetmap()](https://hypertidy.github.io/whatarelief/reference/imagery.html)
 -   [coastline()](https://hypertidy.github.io/whatarelief/reference/coastline.html)
 
-and it’s pretty obvious what they do. What isn’t so obvious is that they
-aren’t really specific to their name, `elevation()` for example can look
-up any raster data source (file, url, anything GDAL understands), just
-use the ‘source’ argument. This also means we don’t have to use the
-online sources, just provide whatever you want.
+They aren’t really specific to their name, `elevation()` for example can
+look up any raster data source (file, url, anything GDAL understands),
+just use the ‘source’ argument. This also means we don’t have to use the
+online sources, just provide whatever you want. Generally, `elevation()`
+will get a matrix (a single band) of numeric raster data, and
+`imagery()` and `streetmap()` will get a matrix of colour data (usually
+from 3 or 4 bands).
 
-We just have trouble naming things.
-
-`imagery()` and `streetmap()` default to satellite+aerial imagery, and
-drawings of street layers respectively.
+`elevation()` defaults to global elevation data from GEBCO, and will
+include higher resolution SRTM for small regions. `imagery()` and
+`streetmap()` default to satellite+aerial imagery, and drawings of
+street layers respectively.
 
 `coastline()` generates coordinates from a elevation source at level =
 0, to give a “coast line” of sorts.
 
 All of these functions have arguments *extent*, *dimension*,
-*projection* - the three key components that make up a raster. Just
-specify them to get what you want.
+*projection* - the three key components that make up a raster. Specify
+these three components to get what you want. Every single spatial object
+you use has an extent (xmin,xmax,ymin,ymax) and a projection (crs), you
+can pick anything for dimension (but 1024x1024 is enough to make a
+picture, for example).
 
 We have been careful to align to the *raster orientation*, which in R is
 the `rasterImage()` convention, this matches the order in which the data
@@ -67,19 +116,14 @@ and ‘projection’ for more custom options.
 
 ``` r
 library(whatarelief)
-image(im <- elevation())  ## orientation is wrong for image() but correct for rasterImage()
+im <- elevation()  ## orientation is wrong for image() but correct for rasterImage()
 #> [1] "/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2021_GEOTIFF/GEBCO_2021.tif"
+image(t(im[nrow(im):1, ]))
 ```
 
 <img src="man/figures/README-elevation-1.png" width="100%" />
 
-``` r
-image(t(im[nrow(im):1, ]))
-```
-
-<img src="man/figures/README-elevation-2.png" width="100%" />
-
-We don’t want any special handling, so use the
+We don’t want this special handling, so use the
 [ximage](https://github.com/hypertidy/ximage) package functions
 `ximage()` and `xcontour()` 🚀.
 
