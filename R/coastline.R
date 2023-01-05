@@ -18,6 +18,7 @@
 #'
 #' @examples
 #' plot(coastline(extent = c(-180, 180, -90, 90)), type = "l")
+#' 
 coastline <- function(extent = NULL, ..., dimension = c(1024, 1024), projection = NULL) {
   if (is.null(extent)) {
     if (dev.cur() > 1) {
@@ -25,6 +26,7 @@ coastline <- function(extent = NULL, ..., dimension = c(1024, 1024), projection 
 
     }
   }
+  dimension <- as.integer(round(dimension))
   ele <- elevation(extent, dimension = dimension, projection = projection)
   #vaster::x_centre
   xl <- extent[1:2]; yl <- extent[3:4]
