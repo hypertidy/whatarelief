@@ -138,7 +138,21 @@ elevation <- function(extent = c(-180, 180, -90, 90), ..., dimension = NULL, pro
 
 }
 
+mapbox_elevation <- function(extent = c(-180, 180, -90, 90), ..., dimension = NULL, projection = NULL, resample = "bilinear", source = NULL, threshold = 0.5) {
+  
+  
+ 
+  src <- sprintf(.elevation_sources["wms_mapbox_terrain"], Sys.getenv("MAPBOX_API_KEY"))
+  l <- vector("list", 3L)
+  for (i in seq_along(l)) {
+    l[[i]] <- elevation(source = src, extent  = extent, dimension = dimension, projection = projection, resample = resample, bands = i,  ...) 
+  }
+  dimension <- dim(l[[i]])
 
+ out <- matrix(-10000 + (l[[1L]] * 256 * 256 + l[[2L]] * 256 + l[[3L]]) * 0.1, dimension[1L], byrow = FALSE)  
+ out[!out > -10000] <- NA
+ out
+}
 dimrat <- function(nativedim, maxd = 512) {
      ord <- order(nativedim)
      nativedim <- sort(nativedim)
