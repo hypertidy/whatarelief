@@ -1,5 +1,7 @@
 # whatarelief dev
 
+* New `satbox()` function for Mapbox satellite/aerial imagery. 
+
 * New 'coastline()' function. 
 
 * imagerY() detects case on one (less than 3) bands in the source. 

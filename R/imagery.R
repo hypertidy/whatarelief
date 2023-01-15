@@ -15,16 +15,18 @@
 
 #' Get imagery data
 #'
-#' Read imagery data for (almost?) any region on Earth.
-#'
-#' Originally using OSM.
+#' Read imagery data for any region on Earth.
 #'
 #' Note that data is streamed into memory, so don't make the dimensions of the 'x' target raster too big.
 #'
 #' By default we're expecting 3 bands of bytes, but if only one is available that is used instead.
 #'
-#' To use these data, please attribute Virtual Earth, otherwise use your own sources.
+#' To use these data, please attribute the image provider, or otherwise use your own sources.
 #'
+#' `imagery()` defaults to Virtual Earth, `streetmap()` to OSM, and `satbox()` to Mapbox Satellite. 
+#' 
+#' To use `satbox()` you must set an environment variable such as 'MAPBOX_API_KEY' to your Mabox token. 
+#' 
 #' @param extent a numeric vector of xmin,xmax,ymin,ymax or a terra or raster rast object
 #' @param ... arguments passed to 'vapour::vapour_warp_raster'
 #' @param source a GDAL raster source, to override the inbuilt source/s
@@ -34,7 +36,7 @@
 #'
 #' @return a matrix, or depending on format of 'extent' a terra rast or raster object with elevation data
 #' @export
-#' @aliases streetmap
+#' @aliases streetmap satbox
 #' @examples
 #'
 #' plt <- function(x) {
@@ -50,7 +52,7 @@
 #' #plt(imagery(terra::rast())
 #' #imagery(raster::raster())
 #'
-imagery <- function(extent = c(-180, 180, -90, 90), ..., dimension = NULL, projection = "OGC:CRS84", resample = "bilinear", source = NULL) {
+imagery <- function(extent = c(-180, 180, -90, 90), ..., dimension = NULL, projection = "OGC:CRS84", resample = "near", source = NULL) {
 
   xraster <- extent ## in the case of terra or raster
   x <- format_out(list(extent = extent, dimension = dimension, projection = projection))

@@ -63,9 +63,15 @@ left that for later, grabbed some sources and made some helpers.
 Here you’ll find functions with clear names about what they provide.
 
 -   [elevation()](https://hypertidy.github.io/whatarelief/reference/elevation.html)
+    obtain GEBCO+-SRTM
 -   [imagery()](https://hypertidy.github.io/whatarelief/reference/imagery.html)
+    obtain Virtual Earth imagery
 -   [streetmap()](https://hypertidy.github.io/whatarelief/reference/imagery.html)
+    obtain OpenStreetmap imagery
+-   [satbox()](https://hypertidy.github.io/whatarelief/reference/imagery.html)
+    obtain Mapbox Satellite/Aerial imagery
 -   [coastline()](https://hypertidy.github.io/whatarelief/reference/coastline.html)
+    obtain coastline from GEBCO+-SRTM
 
 They aren’t really specific to their name, `elevation()` for example can
 look up any raster data source (file, url, anything GDAL understands),
@@ -256,6 +262,17 @@ and the result has a dimension. (Longitude/latitude is assumed if
 sensible, else there’s a warning - but the code will run what you ask of
 it). Provide all the information extent, dimension, projection to get a
 controlled result, or use a raster or terra object to store these.
+
+With a Mapbox API key set in ‘MAPBOX_API_KEY’ you have access to
+`satbox()`.
+
+``` r
+ex <- c(-1, 1, -1, 1) * 0.1 + rep(pt, each = 2L)
+sat <- satbox(extent = ex, dimension = dev.size("px"))
+ximage(sat, zlim = c(0, max(elev)), extent = ex)
+```
+
+<img src="man/figures/README-satbox-1.png" width="100%" />
 
 ## Custom sources
 
