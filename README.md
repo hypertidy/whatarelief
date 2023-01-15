@@ -269,7 +269,7 @@ With a Mapbox API key set in ‘MAPBOX_API_KEY’ you have access to
 ``` r
 ex <- c(-1, 1, -1, 1) * 0.1 + rep(pt, each = 2L)
 sat <- satbox(extent = ex, dimension = dev.size("px"))
-ximage(sat, zlim = c(0, max(elev)), extent = ex)
+ximage(sat,  extent = ex)
 ```
 
 <img src="man/figures/README-satbox-1.png" width="100%" />

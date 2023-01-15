@@ -50,7 +50,7 @@ get_api_key <- function(api = "mapbox", ...) {
     }
     if (is.na(key) || is.null(key) || nchar(key) < 1) {
       mess <- instruct_on_key_creation()
-      warnin(sprintf("no mapbox key found\n\n%s", mess))
+      warning(sprintf("no mapbox key found\n\n%s", mess))
       key <- NULL
     }
   }
