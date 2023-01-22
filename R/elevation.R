@@ -113,7 +113,7 @@ elevation <- function(extent = c(-180, 180, -90, 90), ..., dimension = NULL, pro
   }
 
   if (is.null(source)) {
-    rso <- c("/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2021_GEOTIFF/GEBCO_2021.tif",
+    rso <- c(gebco21(),
              "/vsicurl/https://opentopography.s3.sdsc.edu/raster/COP90/COP90_hh.vrt",
              "/vsicurl/https://opentopography.s3.sdsc.edu/raster/COP30/COP30_hh.vrt" )
             # "/vsicurl/https://opentopography.s3.sdsc.edu/raster/NASADEM/NASADEM_be.vrt")
@@ -138,7 +138,7 @@ elevation <- function(extent = c(-180, 180, -90, 90), ..., dimension = NULL, pro
 
 }
 
-mapbox_elevation <- function(extent = c(-180, 180, -90, 90), ..., dimension = NULL, projection = NULL, resample = "bilinear", source = NULL, threshold = 0.5) {
+mapbox_elevation <- function(extent = c(-180, 180, -90, 90), ..., dimension = NULL, projection = NULL, resample = "near", source = NULL, threshold = 0.5) {
   
   
  

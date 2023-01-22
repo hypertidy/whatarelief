@@ -1,5 +1,7 @@
 # whatarelief dev
 
+* Convenience source functions `gebco21()` returns the COG url. 
+
 * New `satbox()` function for Mapbox satellite/aerial imagery. 
 
 * New 'coastline()' function. 

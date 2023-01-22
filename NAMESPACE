@@ -2,6 +2,7 @@
 
 export(coastline)
 export(elevation)
+export(gebco21)
 export(imagery)
 export(raad_source)
 export(satbox)
