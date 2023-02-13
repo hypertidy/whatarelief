@@ -100,6 +100,7 @@ elevation <- function(extent = c(-180, 180, -90, 90), ..., dimension = NULL, pro
   if (x$lonlat) {
     if (max(wh) > threshold) {
       no_srtm <- TRUE
+      no_srtm30 <- TRUE
     }
   } else {
     ## assuming metres ...

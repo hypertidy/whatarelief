@@ -1,5 +1,7 @@
 # whatarelief dev
 
+* Fix avoid high resolution SRTM when not needed, fix of https://github.com/hypertidy/whatarelief/issues/12. 
+
 * Convenience source functions `gebco21()` returns the COG url. 
 
 * New `satbox()` function for Mapbox satellite/aerial imagery. 
