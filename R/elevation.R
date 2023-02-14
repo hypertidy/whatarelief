@@ -49,7 +49,8 @@ format_out <- function(x) {
     lonlat <- grepl("lonlat", projection) || grepl("4326", projection) || grepl("4269", projection) || grepl("OGC:CRS84", projection) || grepl("GEOGCS", projection)
     x <- list(extent = x, dimension = dimension, projection = projection, lonlat = lonlat, type = "matrix")
   }
-
+   ## don't trust traster on this because raster::isLonLat("NAD27") is FALSE (3.6.14)
+  x$lonlat <- vapour::vapour_crs_is_lonlat(x$projection)
   x
 }
 #' Get digital elevation data
