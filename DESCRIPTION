@@ -29,5 +29,5 @@ Suggests:
 VignetteBuilder: knitr
 URL: https://github.com/hypertidy/whatarelief
 BugReports: https://github.com/hypertidy/whatarelief/issues
-Remotes: hypertidy/ximage
+Remotes: hypertidy/ximage, hypertidy/vapour
 
