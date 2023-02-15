@@ -1,5 +1,7 @@
 # whatarelief dev
 
+* New internal helper function to plot an image with the output of vapour:::gdal_raster_data. 
+
 * Fix avoid high resolution SRTM when not needed, fix of https://github.com/hypertidy/whatarelief/issues/12. 
 
 * Convenience source functions `gebco21()` returns the COG url. 
