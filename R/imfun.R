@@ -3,7 +3,7 @@
 imfun <- function(X, coastline = TRUE) {
   if (!requireNamespace("ximage")) stop("{ximage} package required for imfun()")
   if (is.character(X[[1]])) {
-    if (grepl("^#", X[[1]])) {
+    if (grepl("^#", na.omit(X[[1]])[1])) {
       ## we have image data
     } else {
       X[[1]] <- as.vector(t(elevation(source = X[[1]], extent = attr(X, "extent"), dimension = attr(X, "dimension"), projection = attr(X, "projection"))))
