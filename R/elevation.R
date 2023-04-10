@@ -115,7 +115,7 @@ elevation <- function(extent = c(-180, 180, -90, 90), ..., dimension = NULL, pro
   }
 
   if (is.null(source)) {
-    rso <- c(gebco21(),
+    rso <- c(gebco(),
              "/vsicurl/https://opentopography.s3.sdsc.edu/raster/COP90/COP90_hh.vrt",
              "/vsicurl/https://opentopography.s3.sdsc.edu/raster/COP30/COP30_hh.vrt" )
             # "/vsicurl/https://opentopography.s3.sdsc.edu/raster/NASADEM/NASADEM_be.vrt")

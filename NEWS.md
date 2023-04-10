@@ -1,5 +1,9 @@
 # whatarelief dev
 
+* New function `gebco()` and `gebco22()` the former is currently an alias of the
+latter, also added `gebco19()` so we have  family of versioned and current
+sources.
+
 * New internal helper function to plot an image with the output of vapour:::gdal_raster_data. 
 
 * Fix avoid high resolution SRTM when not needed, fix of https://github.com/hypertidy/whatarelief/issues/12. 

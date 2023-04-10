@@ -169,7 +169,11 @@ plot(setValues(template, elev))
 plot(sf::st_cast(ozmaps::abs_ced, "MULTILINESTRING"), add = TRUE, col = "black")
 ```
   
-Note that all the information we need is present, we provide the extent, and the result has a dimension. (Longitude/latitude is assumed if sensible, else there's a warning - but the code will run what you ask of it). Provide all the information extent, dimension, projection to get a controlled result, or use a raster or terra object to store these. 
+Note that all the information we need is present, we provide the extent, and the
+result has a dimension. (Longitude/latitude is assumed if sensible, else there's
+a warning - but the code will run what you ask of it). Provide all the
+information extent, dimension, projection to get a controlled result, or use a
+raster or terra object to store these.
 
 With a Mapbox API key set in 'MAPBOX_API_KEY' you have access to `satbox()`. 
 
@@ -184,10 +188,15 @@ ximage(sat,  extent = ex)
 
 We can provide our own sources of elevation. 
 
-Use the 'source' argument to `elevation()`, you can input multiple sources so that a higher resolution one has
-a fallback to a lower resolution one, note that by default we have "GEBCO 2021", then "Copernicus GLO-30" in the sources. It doesn't matter what projection or extent these have, but usually a higher resolution one should be listed after lower. 
+Use the 'source' argument to `elevation()`, you can input multiple sources so
+that a higher resolution one has a fallback to a lower resolution one, note that
+by default we have "GEBCO 2022", then "Copernicus GLO-30" in the sources. It
+doesn't matter what projection or extent these have, but usually a higher
+resolution one should be listed after lower.
 
-For example, this string provides the Amazon compute S3 elevation tiles, an 'XYZ' image server that has geotiff elements but is not a georeferenced online service (hence this small bit of XML to wrap it up). 
+For example, this string provides the Amazon compute S3 elevation tiles, an
+'XYZ' image server that has geotiff elements but is not a georeferenced online
+service (hence this small bit of XML to wrap it up).
 
 ```{r aws-custom}
 aws <- "<GDAL_WMS><Service name=\"TMS\"><ServerUrl>https://s3.amazonaws.com/elevation-tiles-prod/geotiff/${z}/${x}/${y}.tif</ServerUrl></Service><DataWindow><UpperLeftX>-20037508.34</UpperLeftX><UpperLeftY>20037508.34</UpperLeftY><LowerRightX>20037508.34</LowerRightX><LowerRightY>-20037508.34</LowerRightY><TileLevel>14</TileLevel><TileCountX>1</TileCountX><TileCountY>1</TileCountY><YOrigin>top</YOrigin></DataWindow><Projection>EPSG:3857</Projection><BlockSizeX>512</BlockSizeX><BlockSizeY>512</BlockSizeY><BandsCount>1</BandsCount><DataType>Int16</DataType><ZeroBlockHttpCodes>403,404</ZeroBlockHttpCodes><DataValues><NoData>-32768</NoData></DataValues><Cache/></GDAL_WMS>"
