@@ -116,9 +116,7 @@ elevation <- function(extent = c(-180, 180, -90, 90), ..., dimension = NULL, pro
 
   if (is.null(source)) {
     rso <- c(gebco(),
-             "/vsicurl/https://opentopography.s3.sdsc.edu/raster/COP90/COP90_hh.vrt",
-             "/vsicurl/https://opentopography.s3.sdsc.edu/raster/COP30/COP30_hh.vrt" )
-            # "/vsicurl/https://opentopography.s3.sdsc.edu/raster/NASADEM/NASADEM_be.vrt")
+             cop90(), cop30())
     if (no_srtm30) rso <- rso[1:2] else rso <- rso[c(1, 3)]
     if (no_srtm) rso <- rso[1L]
     if (!no_srtm) print("SRTM in use, in addition to GEBCO")
