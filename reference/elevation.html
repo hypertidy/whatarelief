@@ -125,20 +125,60 @@ Distributed by OpenTopography. https://doi.org/10.5069/G9028PQB.</p>
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/image.html" class="external-link">image</a></span><span class="op">(</span><span class="fu">elevation</span><span class="op">(</span><span class="op">)</span>, useRaster <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in cop90():</span> could not find function "cop90"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/vsicurl/https://gebco2022.s3.valeria.science/gebco_2022_complete_cog.tif"</span>
+<span class="r-plt img"><img src="elevation-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/image.html" class="external-link">image</a></span><span class="op">(</span><span class="fu">elevation</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">150</span>, <span class="op">-</span><span class="fl">60</span>, <span class="op">-</span><span class="fl">20</span><span class="op">)</span><span class="op">)</span>, useRaster <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in cop90():</span> could not find function "cop90"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/vsicurl/https://gebco2022.s3.valeria.science/gebco_2022_complete_cog.tif"</span>
 <span class="r-in"><span><span class="fu">elevation</span><span class="op">(</span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in cop90():</span> could not find function "cop90"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/vsicurl/https://gebco2022.s3.valeria.science/gebco_2022_complete_cog.tif"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> class       : SpatRaster </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dimensions  : 180, 360, 1  (nrow, ncol, nlyr)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> resolution  : 1, 1  (x, y)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> extent      : -180, 180, -90, 90  (xmin, xmax, ymin, ymax)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> coord. ref. : lon/lat WGS 84 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> source(s)   : memory</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> name        : lyr.1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> min value   : -7188 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> max value   :  5332 </span>
 <span class="r-in"><span><span class="fu">elevation</span><span class="op">(</span><span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/raster.html" class="external-link">raster</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in cop90():</span> could not find function "cop90"</span>
+<span class="r-plt img"><img src="elevation-2.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/vsicurl/https://gebco2022.s3.valeria.science/gebco_2022_complete_cog.tif"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> class      : RasterLayer </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dimensions : 180, 360, 64800  (nrow, ncol, ncell)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> resolution : 1, 1  (x, y)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> extent     : -180, 180, -90, 90  (xmin, xmax, ymin, ymax)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> crs        : +proj=longlat +datum=WGS84 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> source     : memory</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> names      : layer </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> values     : -7188, 5332  (min, max)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">elevation</span><span class="op">(</span><span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/raster.html" class="external-link">raster</a></span><span class="op">(</span><span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/extent.html" class="external-link">extent</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">120</span>, <span class="op">-</span><span class="fl">60</span>, <span class="op">-</span><span class="fl">40</span><span class="op">)</span>, res <span class="op">=</span> <span class="fl">0.25</span>, crs <span class="op">=</span> <span class="st">"OGC:CRS84"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in cop90():</span> could not find function "cop90"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/vsicurl/https://gebco2022.s3.valeria.science/gebco_2022_complete_cog.tif"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> class      : RasterLayer </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dimensions : 80, 160, 12800  (nrow, ncol, ncell)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> resolution : 0.25, 0.25  (x, y)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> extent     : 80, 120, -60, -40  (xmin, xmax, ymin, ymax)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> crs        : +proj=longlat +datum=WGS84 +no_defs </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> source     : memory</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> names      : layer </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> values     : -5064, -1278  (min, max)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu">elevation</span><span class="op">(</span><span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/raster.html" class="external-link">raster</a></span><span class="op">(</span><span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/extent.html" class="external-link">extent</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">*</span> <span class="fl">15e3</span><span class="op">)</span>, nrows <span class="op">=</span> <span class="fl">1024</span>, ncols <span class="op">=</span> <span class="fl">1024</span>,</span></span>
 <span class="r-in"><span>   crs <span class="op">=</span> <span class="st">"+proj=laea +lat_0=44.6371 +lon_0=-63.5923"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in cop90():</span> could not find function "cop90"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "SRTM in use, in addition to GEBCO"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/vsicurl/https://gebco2022.s3.valeria.science/gebco_2022_complete_cog.tif"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/vsicurl/https://opentopography.s3.sdsc.edu/raster/COP90/COP90_hh.vrt"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> class      : RasterLayer </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dimensions : 1024, 1024, 1048576  (nrow, ncol, ncell)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> resolution : 29.29688, 29.29688  (x, y)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> extent     : -15000, 15000, -15000, 15000  (xmin, xmax, ymin, ymax)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> crs        : +proj=laea +lat_0=44.6371 +lon_0=-63.5923 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> source     : memory</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> names      : layer </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> values     : -2, 153  (min, max)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
