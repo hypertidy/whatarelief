@@ -1,4 +1,5 @@
 
+#' @importFrom stats na.omit
 #' @importFrom graphics lines
 imfun <- function(X, coastline = TRUE) {
   if (!requireNamespace("ximage")) stop("{ximage} package required for imfun()")

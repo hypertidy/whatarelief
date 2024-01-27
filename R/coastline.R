@@ -15,7 +15,9 @@
 #'
 #' @return matrix of coordinates in longlat (or whatever projection is specified)
 #' @export
-#'
+#' @importFrom grDevices contourLines dev.cur
+#' @importFrom graphics par
+#' @importFrom utils head
 #' @examples
 #' plot(coastline(extent = c(-180, 180, -90, 90)), type = "l")
 #' 

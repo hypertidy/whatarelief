@@ -1,8 +1,7 @@
 # whatarelief dev
 
 
-
-* Now importing gebco and all source related functions from spatial.datasources. 
+* Now importing gebco and all source related functions from sds. 
 
 * New internal helper function to plot an image with the output of vapour:::gdal_raster_data. 
 

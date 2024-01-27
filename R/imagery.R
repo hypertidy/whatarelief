@@ -35,7 +35,7 @@
 #' plt(imagery())
 #' plt(imagery(c(100, 150, -60, -20), projection = "OGC:CRS84"))
 #' ## can't do yet
-#' #plt(imagery(terra::rast())
+#' #plt(imagery(terra::rast()))
 #' #imagery(raster::raster())
 #'
 imagery <- function(extent = c(-180, 180, -90, 90), ..., dimension = NULL, projection = "OGC:CRS84", resample = "near", source = NULL) {
@@ -69,7 +69,7 @@ imagery <- function(extent = c(-180, 180, -90, 90), ..., dimension = NULL, proje
 
 }
 
-
+#' @importFrom sds wms_openstreetmap_tms
 #' @export
 #' @name imagery
 streetmap <- function(extent = c(-180, 180, -90, 90), ..., dimension = NULL, projection = "OGC:CRS84", resample = "cubic", source = NULL) {
@@ -78,7 +78,7 @@ streetmap <- function(extent = c(-180, 180, -90, 90), ..., dimension = NULL, pro
   x <- format_out(list(extent = extent, dimension = dimension, projection = projection))
 
   if (is.null(source)) {
-    rso <- .streetmap_sources["wms_openstreetmap_tms"]
+    rso <- sds::wms_openstreetmap_tms()
   } else {
     rso <- source
   }

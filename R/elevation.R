@@ -77,7 +77,7 @@ format_out <- function(x) {
 #'
 #' @return a matrix, or depending on format of 'extent' a terra rast or raster object with elevation data
 #' @export
-#' @importFrom spatial.datasources cop30 cop90
+#' @importFrom sds cop30 cop90
 #' @examples
 #'
 #' image(elevation(), useRaster = TRUE)
@@ -87,8 +87,9 @@ format_out <- function(x) {
 #'
 #' elevation(raster::raster(raster::extent(80, 120, -60, -40), res = 0.25, crs = "OGC:CRS84"))
 #' \donttest{
-#' elevation(raster::raster(raster::extent(c(-1, 1, -1, 1) * 15e3), nrows = 1024, ncols = 1024,
+#' elevation(terra::rast(terra::ext(c(-1, 1, -1, 1) * 15e3), nrows = 256, ncols = 256,
 #'    crs = "+proj=laea +lat_0=44.6371 +lon_0=-63.5923"))
+#'    
 #' }
 elevation <- function(extent = c(-180, 180, -90, 90), ..., dimension = NULL, projection = NULL, resample = "bilinear", source = NULL, threshold = 0.5) {
 
@@ -115,8 +116,8 @@ elevation <- function(extent = c(-180, 180, -90, 90), ..., dimension = NULL, pro
   }
 
   if (is.null(source)) {
-    rso <- c(gebco(),
-             spatial.datasources::cop90(), spatial.datasources::cop30())
+    rso <- c(sds::gebco(),
+             sds::cop90(), sds::cop30())
     if (no_srtm30) rso <- rso[1:2] else rso <- rso[c(1, 3)]
     if (no_srtm) rso <- rso[1L]
     if (!no_srtm) print("SRTM in use, in addition to GEBCO")

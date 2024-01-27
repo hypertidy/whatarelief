@@ -75,7 +75,7 @@ plot(NA, xlim = c(0, nc), ylim = c(0, nr), asp = 1);
 plt(imagery())
 plt(imagery(c(100, 150, -60, -20), projection = "OGC:CRS84"))
 ## can't do yet
-#plt(imagery(terra::rast())
+#plt(imagery(terra::rast()))
 #imagery(raster::raster())
 
 }

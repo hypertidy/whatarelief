@@ -55,7 +55,8 @@ elevation(raster::raster())
 
 elevation(raster::raster(raster::extent(80, 120, -60, -40), res = 0.25, crs = "OGC:CRS84"))
 \donttest{
-elevation(raster::raster(raster::extent(c(-1, 1, -1, 1) * 15e3), nrows = 1024, ncols = 1024,
+elevation(terra::rast(terra::ext(c(-1, 1, -1, 1) * 15e3), nrows = 256, ncols = 256,
    crs = "+proj=laea +lat_0=44.6371 +lon_0=-63.5923"))
+   
 }
 }
